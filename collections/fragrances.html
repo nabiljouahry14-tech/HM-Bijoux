@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fragrances — HM Bijoux</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../main.css">
+  <link rel="stylesheet" href="collections.css">
+  <script src="../translations.js"></script>
+</head>
+
+<body>
+
+<!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand">HM Bijoux</a>
+
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="../index.html#products" data-i18n="nav.products">Products</a>
+        <a href="../index.html#collections" data-i18n="nav.collections">Collections</a>
+        <a href="../index.html#about" data-i18n="nav.about">About</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Menu" aria-expanded="false">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+          </svg>
+        </button>
+        <button id="cartBtn" class="cart-btn" type="button" aria-label="View cart" aria-describedby="cartCount" aria-expanded="false" aria-controls="cartPanel">
+          <span class="cart-count" id="cartCount">0</span>
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M6 6h15l-1.5 9h-12z" />
+            <circle cx="9" cy="18" r="1.5"/>
+            <circle cx="18" cy="18" r="1.5"/>
+          </svg>
+        </button>
+
+        <div id="userMenu" class="user-menu" style="position:relative; display:none;">
+          <img id="userAvatar" class="user-avatar" />
+
+          <div id="userDropdown" class="user-dropdown">
+            <div class="user-info">
+              <img id="userAvatarLarge" />
+              <div>
+                <div id="userName"></div>
+                <div id="userEmail"></div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <button class="dropdown-item" id="ordersBtn">
+              <span class="item-left">
+                <i data-lucide="receipt"></i>
+                <span data-i18n="menu.orders">My Orders</span>
+              </span>
+            </button>
+
+            <button class="dropdown-item" id="profileBtn">
+              <span class="item-left">
+                <i data-lucide="settings"></i>
+                <span data-i18n="menu.profile">Profile Settings</span>
+              </span>
+            </button>
+
+            <div class="dropdown-divider"></div>
+
+            <!-- Language Selector -->
+            <div class="language-section">
+              <div class="language-label"><i data-lucide="globe"></i> <span data-i18n="menu.language">Language</span></div>
+              <div class="language-selector">
+                <div class="language-option" data-lang="en">
+                  <span class="lang-flag">🇺🇸</span>
+                  <span>English</span>
+                </div>
+                <div class="language-option" data-lang="ar">
+                  <span class="lang-flag">🇲🇦</span>
+                  <span>العربية</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <button class="dropdown-item logout" id="logoutBtn">
+              <span class="item-left">
+                <i data-lucide="log-out"></i>
+                <span data-i18n="menu.logout">Logout</span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <button id="googleLoginBtn" class="google-login-btn">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="16" height="16">
+          <span data-i18n="btn.loginGoogle">Login with Google</span>
+        </button>
+
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">
+    <!-- Sun -->
+    <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+        <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+    </svg>
+
+    <!-- Moon -->
+    <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+</button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <div class="brand">HM Bijoux</div>
+        <button id="closeMobileMenu" class="close-mobile-menu" aria-label="Close menu">×</button>
+      </div>
+
+      <div class="mobile-menu-body">
+        <nav class="mobile-nav">
+          <a href="../index.html#products" data-i18n="nav.products">Products</a>
+          <a href="../index.html#collections" data-i18n="nav.collections">Collections</a>
+          <a href="../index.html#about" data-i18n="nav.about">About</a>
+        </nav>
+
+        <div class="mobile-user-section" style="display:none;">
+          <button class="mobile-menu-item" id="mobileOrdersBtn">
+            <i data-lucide="receipt"></i>
+            <span data-i18n="menu.orders">My Orders</span>
+          </button>
+          <button class="mobile-menu-item" id="mobileProfileBtn">
+            <i data-lucide="settings"></i>
+            <span data-i18n="menu.profile">Profile Settings</span>
+          </button>
+          <div class="mobile-divider"></div>
+          <button class="mobile-menu-item logout" id="mobileLogoutBtn">
+            <i data-lucide="log-out"></i>
+            <span data-i18n="menu.logout">Logout</span>
+          </button>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="mobile-language-section">
+          <div class="mobile-language-label">
+            <i data-lucide="globe"></i>
+            <span data-i18n="menu.language">Language</span>
+          </div>
+          <div class="mobile-language-selector">
+            <div class="language-option" data-lang="en">
+              <span class="lang-flag">🇺🇸</span>
+              <span>English</span>
+            </div>
+            <div class="language-option" data-lang="ar">
+              <span class="lang-flag">🇲🇦</span>
+              <span>العربية</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theme toggle -->
+        <button id="mobileThemeToggle" class="mobile-menu-item theme-item">
+          <div class="theme-toggle-icons">
+            <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+              <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span data-i18n="menu.theme">Theme</span>
+        </button>
+        <button class="mobile-menu-item google-login-btn" id="mobileGoogleLoginBtn">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="16">
+          <span>Login with Google</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <section class="collection-hero">
+    <h1 data-i18n="collection.fragrances">Fragrances</h1>
+  </section>
+
+  <section class="collection-products container">
+
+    <!-- Collection search (pro ecommerce style) -->
+    <div class="collection-search" role="search" aria-label="Search products">
+      <label for="collectionSearch" class="visually-hidden" data-i18n="search.label">Search products</label>
+      <div class="search-inner">
+        <input id="collectionSearch" class="search-input" type="search" data-i18n-placeholder="search.placeholder" placeholder="Search products or collections…" aria-label="Search products" aria-autocomplete="list" aria-controls="collectionSearchList" autocomplete="off">
+        <button type="button" class="search-clear" aria-label="Clear search" hidden>&times;</button>
+      </div>
+      <ul id="collectionSearchList" class="search-suggestions" role="listbox" aria-label="Search suggestions"></ul>
+      <div class="search-noresults" hidden data-i18n="search.noresults">No products found — try different keywords.</div>
+    </div>
+
+    <div class="collection-controls" style="display:flex;gap:8px;align-items:center;margin-bottom:18px;">
+      <div style="font-size:14px;color:var(--muted);" data-i18n="filter.label">Filter:</div>
+      <div>
+        <button class="filter-btn" data-filter="all" type="button" data-i18n="filter.all">All</button>
+        <button class="filter-btn" data-filter="new" type="button" data-i18n="filter.new">New</button>
+        <button class="filter-btn" data-filter="sale" type="button" data-i18n="filter.sale">Sale</button>
+        <button class="filter-btn" data-filter="under50" type="button" data-i18n="filter.under50">Under $50</button>
+      </div>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- Accessible live region for cart updates -->
+  <div id="cartLive" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- CART PANEL (copied from index for collections pages) -->
+  <aside id="cartPanel" class="cart-panel" aria-hidden="true" role="dialog" aria-label="Shopping cart">
+  <div class="cart-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <h3>Your Cart</h3>
+      <span class="cart-badge-summary" id="cartCountSummary">0 items</span>
+    </div>
+    <button id="closeCart" class="close-cart" aria-label="Close cart">×</button>
+  </div>
+
+  <div id="cartItems" class="cart-items" role="list">
+    <!-- items injected here -->
+  </div>
+
+  <div class="cart-empty" id="cartEmpty" style="display:none; padding:28px; text-align:center; color:var(--muted);">
+    <span data-i18n="cart.empty">Your cart is empty.</span><br>
+    <small data-i18n="cart.empty.sub">Add something nice ✨</small>
+  </div>
+
+  <div class="cart-footer">
+    <div class="cart-totals-row">
+      <div data-i18n="cart.subtotal">Subtotal</div>
+      <div id="cartTotal">0</div>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" data-i18n="cart.checkout">Checkout</button>
+    <button class="clear-cart-btn" id="clearCartBtn" style="margin-top:8px; width:100%; background:transparent; color:var(--primary); border:1px solid rgba(11,95,255,0.08);" data-i18n="cart.clear">Clear Cart</button>
+  </div>
+</aside>
+
+  <!-- QUICK VIEW MODAL -->
+  <div id="quickViewModal" class="quick-view-modal" aria-hidden="true">
+    <div class="qv-overlay"></div>
+    <div class="qv-content">
+      <button id="qvClose" class="qv-close" aria-label="Close">&times;</button>
+      <div class="qv-body">
+        <img id="qvImage" src="" alt="">
+        <div class="qv-info">
+          <h3 id="qvTitle"></h3>
+          <p id="qvDesc"></p>
+          <span id="qvPrice"></span>
+          <button id="qvAddBtn" class="add-btn" data-i18n="btn.addToCart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+      <script src="../utils.js"></script>
+      <script src="../cart.js"></script>
+      <script src="../qv.js"></script>
+      <script src="../search.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+      <script src="https://unpkg.com/lucide@latest"></script>
+      <script type="module" src="../app.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+          const mobileMenu = document.getElementById('mobileMenu');
+          const closeMobileMenu = document.getElementById('closeMobileMenu');
+          const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+          const mobileNavLinks = mobileMenu?.querySelectorAll('.mobile-nav a');
+
+          const closeMenu = () => {
+            if (!mobileMenu) return;
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+          };
+
+          mobileMenuBtn?.addEventListener('click', () => {
+            if (!mobileMenu) return;
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          });
+
+          closeMobileMenu?.addEventListener('click', closeMenu);
+          mobileOverlay?.addEventListener('click', closeMenu);
+
+          mobileNavLinks?.forEach((link) => {
+            link.addEventListener('click', closeMenu);
+          });
+
+          const mobileOrdersBtn = document.getElementById('mobileOrdersBtn');
+          const mobileProfileBtn = document.getElementById('mobileProfileBtn');
+
+          mobileOrdersBtn?.addEventListener('click', () => {
+            closeMenu();
+            window.location.href = '../orders.html';
+          });
+
+          mobileProfileBtn?.addEventListener('click', () => {
+            closeMenu();
+            window.location.href = '../settings.html';
+          });
+
+          const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+          mobileThemeToggle?.addEventListener('click', () => {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            closeMenu();
+          });
+
+          const langOptions = mobileMenu?.querySelectorAll('.language-option');
+          langOptions?.forEach(option => {
+            option.addEventListener('click', () => {
+              const lang = option.getAttribute('data-lang');
+              setLanguage(lang);
+              closeMenu();
+            });
+          });
+
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu?.getAttribute('aria-hidden') === 'false') {
+              closeMenu();
+            }
+          });
+        });
+      </script>
+
+    </body>
+    </html>
