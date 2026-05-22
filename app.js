@@ -404,7 +404,7 @@ const BASE = "/HM-Bijoux";
         await supabase.auth.signInWithOAuth({
           provider: "google",
           options: {
-            redirectTo: window.location.origin + "/index.html",
+            redirectTo: `${window.location.origin}/HM-Bijoux/index.html`,
             flowType: "pkce",
             queryParams: {
               access_type: "offline",
