@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hm Bijoux Inoxidable</title>
+  <base href="/HM-Bijoux/">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="main.css">
+
+  <meta name="theme-color" content="#f5f6f8" id="theme-color-meta">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">HM Bijoux</div>
+
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="#products" data-i18n="nav.products">Products</a>
+        <a href="#collections" data-i18n="nav.collections">Collections</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+      </nav>
+
+      <!-- Header search (homepage) -->
+      <div class="header-search collection-search" role="search" aria-label="Search products and collections">
+        <div class="search-wrap">
+          <input id="globalSearch" class="search-input" type="search" placeholder="Search products or collections..." data-i18n-placeholder="search.placeholder" aria-label="Search" autocomplete="off">
+          <button class="search-clear" type="button" hidden aria-label="Clear search">×</button>
+          <ul class="search-suggestions" role="listbox" hidden></ul>
+          <div class="search-noresults" hidden data-i18n="search.noresults">Nothing found</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Menu" aria-expanded="false" style="display:none;">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+          </svg>
+        </button>
+
+        <button id="cartBtn" class="cart-btn" type="button" aria-label="View cart" aria-describedby="cartCount" aria-expanded="false">
+          <span class="cart-count" id="cartCount">0</span>
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M6 6h15l-1.5 9h-12z" />
+            <circle cx="9" cy="18" r="1.5"/>
+            <circle cx="18" cy="18" r="1.5"/>
+          </svg>
+        </button>
+
+        <button id="mobileSearchBtn" class="mobile-search-btn" type="button" aria-label="Search">
+          <i data-lucide="search"></i>
+        </button>
+
+        <div id="userMenu" class="user-menu" style="position:relative; display:none;">
+          <img id="userAvatar" class="user-avatar" />
+
+          <div id="userDropdown" class="user-dropdown">
+            <div class="user-info">
+              <img id="userAvatarLarge" />
+              <div>
+                <div id="userName"></div>
+                <div id="userEmail"></div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <button class="dropdown-item" id="ordersBtn">
+              <span class="item-left">
+                <i data-lucide="receipt"></i>
+                <span data-i18n="menu.orders">My Orders</span>
+              </span>
+            </button>
+
+            <button class="dropdown-item" id="profileBtn">
+              <span class="item-left">
+                <i data-lucide="settings"></i>
+                <span data-i18n="menu.profile">Profile Settings</span>
+              </span>
+            </button>
+
+            <div class="dropdown-divider"></div>
+
+            <!-- Language Selector -->
+            <div class="language-section">
+              <div class="language-label"><i data-lucide="globe"></i><span data-i18n="menu.language">Language</span></div>
+              <div class="language-selector">
+                <div class="language-option" data-lang="en">
+                  <span class="lang-flag">🇺🇸</span>
+                  <span>English</span>
+                </div>
+                <div class="language-option" data-lang="ar">
+                  <span class="lang-flag">🇲🇦</span>
+                  <span>العربية</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <button class="dropdown-item logout" id="logoutBtn">
+              <span class="item-left">
+                <i data-lucide="log-out"></i>
+                <span data-i18n="menu.logout">Logout</span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <button id="googleLoginBtn" class="google-login-btn">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="16" height="16">
+          <span data-i18n="btn.loginGoogle">Login with Google</span>
+        </button>
+
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">
+    <!-- Sun -->
+    <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+        <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+    </svg>
+
+    <!-- Moon -->
+    <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+</button>
+
+      </div>
+    </div>
+  </header>
+
+
+  <!-- MOBILE SEARCH MODAL -->
+  <div id="mobileSearchModal" class="mobile-search-modal collection-search" aria-hidden="true">
+    <div class="mobile-search-backdrop"></div>
+    <div class="mobile-search-card">
+      <div class="mobile-search-header">
+        <div class="search-wrap">
+          <input id="mobileHeaderSearch" class="search-input" type="search" placeholder="Search products..." data-i18n-placeholder="search.placeholder" aria-label="Search" autocomplete="off">
+          <button id="closeMobileSearch" class="search-close-btn" type="button" aria-label="Close search">×</button>
+          <ul class="search-suggestions" role="listbox" hidden></ul>
+          <div class="search-noresults" hidden data-i18n="search.noresults">Nothing found</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <div class="brand">HM Bijoux</div>
+        <button id="closeMobileMenu" class="close-mobile-menu" aria-label="Close menu">×</button>
+      </div>
+
+      <div class="mobile-menu-body">
+        <!-- Nav -->
+        <nav class="mobile-nav">
+          <a href="#products" data-i18n="nav.products">Products</a>
+          <a href="#collections" data-i18n="nav.collections">Collections</a>
+          <a href="#about" data-i18n="nav.about">About</a>
+        </nav>
+
+        <!-- Actions -->
+        <div class="mobile-actions">
+          <button id="mobileCartBtn" class="mobile-menu-item cart-item" type="button" aria-label="View cart">
+            <span class="cart-count" id="mobileCartCount">0</span>
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
+              <path d="M6 6h15l-1.5 9h-12z" />
+              <circle cx="9" cy="18" r="1.5"/>
+              <circle cx="18" cy="18" r="1.5"/>
+            </svg>
+            <span data-i18n="nav.cart">Cart</span>
+          </button>
+
+          <!-- User menu items if logged in -->
+          <div id="mobileUserSection" style="display:none;">
+            <button class="mobile-menu-item" id="mobileOrdersBtn">
+              <i data-lucide="receipt"></i>
+              <span data-i18n="menu.orders">My Orders</span>
+            </button>
+
+            <button class="mobile-menu-item" id="mobileProfileBtn">
+              <i data-lucide="settings"></i>
+              <span data-i18n="menu.profile">Profile Settings</span>
+            </button>
+
+            <div class="mobile-divider"></div>
+
+            <button class="mobile-menu-item logout" id="mobileLogoutBtn">
+              <i data-lucide="log-out"></i>
+              <span data-i18n="menu.logout">Logout</span>
+            </button>
+          </div>
+
+          <!-- Language Selector -->
+          <div class="mobile-language-section">
+            <div class="mobile-language-label">
+              <i data-lucide="globe"></i>
+              <span data-i18n="menu.language">Language</span>
+            </div>
+            <div class="mobile-language-selector">
+              <div class="language-option" data-lang="en">
+                <span class="lang-flag">🇺🇸</span>
+                <span>English</span>
+              </div>
+              <div class="language-option" data-lang="ar">
+                <span class="lang-flag">🇲🇦</span>
+                <span>العربية</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Theme toggle -->
+          <button id="mobileThemeToggle" class="mobile-menu-item theme-item">
+            <div class="theme-toggle-icons">
+              <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+                <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <span data-i18n="menu.theme">Theme</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-left">
+        <h1 class="hero-title" data-i18n="hero.title">Premium Jewelry</h1>
+        <p class="hero-sub" data-i18n="hero.subtitle">Discover our exquisite collection of handcrafted jewelry.</p>
+
+        <div class="hero-actions">
+          <a href="#products" class="btn btn-primary" data-i18n="hero.explore">Explore Products</a>
+          <a href="#collections" class="btn btn-ghost" data-i18n="hero.collections">View Collections</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="swiper hero-swiper">
+          <div class="swiper-wrapper"></div>
+
+          <div class="swiper-button-prev hero-prev"></div>
+          <div class="swiper-button-next hero-next"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PRODUCTS -->
+  <section id="products" class="section products">
+    <div class="container">
+      <h2 class="section-title" data-i18n="section.featured">Featured Products</h2>
+
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+
+  <!-- COLLECTIONS -->
+  <section id="collections" class="section collections">
+    <div class="container">
+      <h2 class="section-title" data-i18n="section.collections">Collections</h2>
+
+      <div class="collections-row">
+
+        <a class="collection-card" href="collections/urban-essentials.html">
+          <img src="chaines.png" alt="Urban Essentials" loading="lazy">
+          <div class="ct-text" data-i18n="collection.urban">Fancy Chaines</div>
+        </a>
+
+        <a class="collection-card" href="collections/fragrances.html">
+          <img src="rings.png" alt="Fragrances" loading="lazy">
+          <div class="ct-text" data-i18n="collection.fragrances">Fancy Rings</div>
+        </a>
+
+        <a class="collection-card" href="collections/accessories.html">
+          <img src="braclet.png" alt="Accessories" loading="lazy">
+          <div class="ct-text" data-i18n="collection.accessories">Fancy Bracelets & Watches</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT -->
+  <section id="about" class="section about">
+    <div class="container about-inner">
+      <h2 class="section-title" data-i18n="section.why">Why HM Bijoux</h2>
+      <div class="about-text">
+        <div class="about-item">
+          <i data-lucide="gem"></i>
+          <span data-i18n="about.premium">Premium materials</span>
+        </div>
+
+        <div class="about-item">
+          <i data-lucide="truck"></i>
+          <span data-i18n="about.shipping">Fast shipping</span>
+        </div>
+
+        <div class="about-item">
+          <i data-lucide="shield-check"></i>
+          <span data-i18n="about.secure">Secure checkout</span>
+        </div>
+      </div>
+      <a href="about.html" class="btn btn-ghost" data-i18n="section.learn">Learn More</a>
+    </div>
+  </section>
+
+
+  <!-- CART PANEL -->
+  <aside id="cartPanel" class="cart-panel" aria-hidden="true" role="dialog" aria-label="Shopping cart">
+  <div class="cart-header">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <h3 data-i18n="cart.title">Your Cart</h3>
+      <span class="cart-badge-summary" id="cartCountSummary">0 items</span>
+    </div>
+    <button id="closeCart" class="close-cart" aria-label="Close cart">×</button>
+  </div>
+
+  <div id="cartItems" class="cart-items" role="list">
+    <!-- items injected here -->
+  </div>
+
+  <div class="cart-empty" id="cartEmpty" style="display:none; padding:28px; text-align:center; color:var(--muted);">
+    <span data-i18n="cart.empty">Your cart is empty.</span><br>
+    <small data-i18n="cart.empty.sub">Add something nice ✨</small>
+  </div>
+
+  <div class="cart-footer">
+    <div class="cart-totals-row">
+      <div data-i18n="cart.subtotal">Subtotal</div>
+      <div id="cartTotal">0</div>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn" data-i18n="cart.checkout">Checkout</button>
+    <button class="clear-cart-btn" id="clearCartBtn" style="margin-top:8px; width:100%; background:transparent; color:var(--primary); border:1px solid rgba(11,95,255,0.08);" data-i18n="cart.clear">Clear Cart</button>
+  </div>
+</aside>
+
+<!-- aria-live region for cart announcements (visually hidden) -->
+<div id="cartLive" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px;"> </div>
+
+<!-- QUICK VIEW MODAL -->
+<div id="quickViewModal" class="quick-view-modal" aria-hidden="true">
+  <div class="qv-overlay"></div>
+  <div class="qv-content">
+    <button id="qvClose" class="qv-close">&times;</button>
+    <div class="qv-body">
+      <img id="qvImage" src="" alt="">
+      <div class="qv-info">
+        <h3 id="qvTitle"></h3>
+        <p id="qvDesc"></p>
+        <span id="qvPrice"></span>
+        <button id="qvAddBtn" class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+
+      <!-- BRAND -->
+      <div class="footer-col brand-col">
+        <h3 class="footer-logo">HM Bijoux</h3>
+        <p class="footer-text">
+          Premium Jewelry crafted for modern living. Discover our exquisite collection of handcrafted pieces designed to elevate your style.
+        </p>
+
+        <div class="footer-socials">
+
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/hm_bijoux_inoxidable/" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 
+              5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 
+              3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 
+              1.3-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 
+              2a3 3 0 110 6 3 3 0 010-6zm4.8-.9a1.2 1.2 0 
+              100 2.4 1.2 1.2 0 000-2.4z"/>
+            </svg>
+          </a>
+
+          <!-- TikTok -->
+          <a href="https://www.tiktok.com/@hmbijoux12" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M16 2h3a5 5 0 005 5v3a8 8 0 01-5-1.8v6.3a6.5 6.5 0 11-6.5-6.5c.4 
+              0 .8 0 1.2.1v3.3a3.5 3.5 0 10 2.3 3.3V2z"/>
+            </svg>
+          </a>
+
+          <!-- Facebook -->
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path d="M22 12a10 10 0 10-11.6 9.9v-7h-2.6v-2.9h2.6V9.4c0-2.6 
+              1.6-4 3.9-4 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 
+              0-1.6.7-1.6 1.5v1.8h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/>
+            </svg>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- POLICIES -->
+      <div class="footer-col">
+        <h4 data-i18n="footer.policies">Policies</h4>
+        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+        <a href="terms.html" data-i18n="footer.terms">Terms of Service</a>
+        <a href="refund.html" data-i18n="footer.refund">Refund Policy</a>
+      </div>
+
+      <!-- SUPPORT -->
+      <div class="footer-col">
+        <h4 data-i18n="footer.support">Support</h4>
+        <a href="#" id="contactBtn" data-i18n="footer.contact">Contact Us</a>
+        <a href="shipping.html" data-i18n="footer.shipping">Shipping Info</a>
+        <a href="faq.html" data-i18n="footer.faq">FAQ</a>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer.developers">Developers</h4>
+        <a href="api.html" data-i18n="footer.api">API</a>
+        <a href="status.html" data-i18n="footer.status">Status</a>
+        <a href="documentation.html" data-i18n="footer.docs">Documentation</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      © <span id="year">2026</span> HM Bijoux. <span data-i18n="footer.copyright-end">All rights reserved.</span>
+    </div>
+  </footer>
+
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script src="utils.js"></script>
+  <script src="translations.js"></script>
+  <script src="cart.js"></script>
+  <script src="qv.js"></script>
+  <script src="search.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script type="module" src="app.js"></script>
+  
+  <!-- Language Switcher -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const langOptions = document.querySelectorAll('.language-option');
+      langOptions.forEach(option => {
+        option.addEventListener('click', () => {
+          const lang = option.getAttribute('data-lang');
+          setLanguage(lang);
+          // Close dropdown after selecting
+          const dropdown = document.getElementById('userDropdown');
+          if (dropdown) dropdown.classList.remove('open');
+        });
+      });
+    });
+  </script>
+
+  <!-- Mobile Menu Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const closeMobileMenu = document.getElementById('closeMobileMenu');
+      const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+
+      // Open mobile menu
+      mobileMenuBtn?.addEventListener('click', () => {
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+
+      // Close mobile menu
+      const closeMenu = () => {
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+
+      closeMobileMenu?.addEventListener('click', closeMenu);
+      mobileOverlay?.addEventListener('click', closeMenu);
+
+      // Close on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.getAttribute('aria-hidden') === 'false') {
+          closeMenu();
+        }
+      });
+
+      // Mobile menu items
+      const mobileCartBtn = document.getElementById('mobileCartBtn');
+      const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+      const mobileOrdersBtn = document.getElementById('mobileOrdersBtn');
+      const mobileProfileBtn = document.getElementById('mobileProfileBtn');
+      const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+      const mobileGoogleLoginBtn = document.getElementById('mobileGoogleLoginBtn');
+      const mobileNavLinks = mobileMenu.querySelectorAll('.mobile-nav a');
+
+      // Close mobile menu when nav links are clicked
+      mobileNavLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          closeMenu();
+        });
+      });
+
+      // Cart button
+      mobileCartBtn?.addEventListener('click', () => {
+        closeMenu();
+        // Trigger cart panel open
+        const cartPanel = document.getElementById('cartPanel');
+        if (cartPanel) {
+          cartPanel.classList.add('open');
+          cartPanel.setAttribute('aria-hidden', 'false');
+        }
+      });
+
+      // Theme toggle
+      mobileThemeToggle?.addEventListener('click', () => {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        closeMenu();
+      });
+
+      // Orders button
+      mobileOrdersBtn?.addEventListener('click', () => {
+        // Handle orders navigation
+        closeMenu();
+      });
+
+      // Profile button
+      mobileProfileBtn?.addEventListener('click', () => {
+        // Handle profile navigation
+        closeMenu();
+      });
+
+      // Logout button
+      mobileLogoutBtn?.addEventListener('click', () => {
+        // Handle logout
+        closeMenu();
+      });
+
+      // Google login
+      mobileGoogleLoginBtn?.addEventListener('click', () => {
+        // Handle Google login
+        closeMenu();
+      });
+
+      // Update cart count in mobile menu
+      const updateMobileCartCount = () => {
+        const cartCount = document.getElementById('cartCount');
+        const mobileCartCount = document.getElementById('mobileCartCount');
+        if (cartCount && mobileCartCount) {
+          mobileCartCount.textContent = cartCount.textContent;
+        }
+      };
+
+      // Update mobile cart count when cart changes
+      const observer = new MutationObserver(updateMobileCartCount);
+      const cartCount = document.getElementById('cartCount');
+      if (cartCount) {
+        observer.observe(cartCount, { childList: true, subtree: true });
+      }
+
+      // Show/hide user section based on login status
+      const updateUserSection = () => {
+        const userMenu = document.getElementById('userMenu');
+        const mobileUserSection = document.getElementById('mobileUserSection');
+        const mobileGoogleLogin = document.getElementById('mobileGoogleLoginBtn');
+
+        if (userMenu && userMenu.style.display !== 'none') {
+          if (mobileUserSection) mobileUserSection.style.display = 'block';
+          if (mobileGoogleLogin) mobileGoogleLogin.style.display = 'none';
+        } else {
+          if (mobileUserSection) mobileUserSection.style.display = 'none';
+          if (mobileGoogleLogin) mobileGoogleLogin.style.display = 'block';
+        }
+      };
+
+      // Check initially
+      updateUserSection();
+
+      // Observe user menu visibility changes
+      const userMenuObserver = new MutationObserver(updateUserSection);
+      const userMenu = document.getElementById('userMenu');
+      if (userMenu) {
+        userMenuObserver.observe(userMenu, { attributes: true, attributeFilter: ['style'] });
+      }
+
+      // Mobile search functionality
+      const mobileGlobalSearch = document.getElementById('mobileHeaderSearch');
+      if (mobileGlobalSearch) {
+        mobileGlobalSearch.addEventListener('input', (e) => {
+          // Reuse existing search logic
+          const globalSearch = document.getElementById('globalSearch');
+          if (globalSearch) {
+            globalSearch.value = e.target.value;
+            globalSearch.dispatchEvent(new Event('input'));
+          }
+        });
+      }
+    });
+  </script>
+  <div id="contactModal" class="contact-modal">
+    <div class="contact-box">
+      <button id="closeContact">&times;</button>
+
+      <h3 data-i18n="contact.title">Contact Us</h3>
+
+      <a href="mailto:nabiljouahry14@gmail.com?subject=Support%20Request%20-%20HM Bijoux" class="contact-option" id="emailBtn">
+        <i data-lucide="mail"></i>
+        <span data-i18n="contact.email">Email Us</span>
+      </a>
+
+      <a href="https://wa.me/212634630703" target="_blank" class="contact-option whatsapp">
+        <i data-lucide="message-circle"></i>
+        <span data-i18n="contact.whatsapp">WhatsApp</span>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>
