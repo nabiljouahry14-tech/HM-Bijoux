@@ -1,7 +1,7 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-  body { min-height: 100vh; }
+  body { min-height: 100vh;  padding-top: 64px; }
 
   :root{
     --bg: #f5f6f8;
@@ -274,7 +274,7 @@
 
   /* header */
   .site-header {
-    position: fixed; top: 0; left: 0;  right: 0; z-index: 120; backdrop-filter: blur(6px);
+    position: sticky; top: 0; left: 0;  right: 0; z-index: 120; backdrop-filter: blur(6px);
     background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.82));
     border-bottom: 1px solid rgba(15,23,42,0.04);
     transition: background .25s ease, border-color .25s ease;
@@ -295,6 +295,24 @@
   }
   .header-inner { display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:12px; }
   .brand { font-weight:800; font-size:20px; letter-spacing:0.3px; }
+  @media (max-width: 768px) {
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav,
+  .header-search {
+    display: none; /* important: hide desktop clutter */
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+}
   /* ensure brand links keep brand color instead of default browser link color */
   .brand a { color: var(--text); text-decoration: none; display:inline-block; }
   .brand a:hover { opacity: 0.95; }
