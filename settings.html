@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <script>
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="settings.pageTitle">Profile Settings • HM Bijoux</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <script src="translations.js"></script>
+  <script src="utils.js"></script>
+
+  <style>
+    .section { padding: 50px 0 80px; }
+    .container { max-width: 1200px; margin: auto; }
+    .settings-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 34px; flex-wrap: wrap; position: relative; }
+    .settings-title-wrap { flex: 1; min-width: 0; }
+    .settings-title-wrap h1 { margin: 0; font-size: 42px; font-weight: 800; letter-spacing: -0.03em; }
+    .settings-sub { margin-top: 8px; color: var(--muted); font-size: 15px; }
+    .settings-actions { display: flex; align-items: center; gap: 12px; justify-content: flex-end; width: 100%; flex-wrap: wrap; }
+    .back-store-btn { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-radius: 18px; text-decoration: none; background: var(--card); border: 1px solid var(--border); color: var(--text); font-weight: 600; transition: .25s ease; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+    .back-store-btn:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); }
+    .theme-toggle { position: absolute; top: 10px; right: 10px; min-width: auto; }
+    [dir="rtl"] .theme-toggle { right: auto; left: 10px; }
+    .settings-section { display: none; }
+    .settings-section.active { display: block; }
+    .settings-switch { display: flex; align-items: center; gap: 12px; font-size: 15px; }
+    .settings-grid { display: grid; grid-template-columns: 260px 1fr; gap: 24px; margin-top: 30px; }
+    .settings-sidebar { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 14px; display: flex; flex-direction: column; gap: 10px; height: max-content; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+    .settings-sidebar {
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .settings-sidebar::-webkit-scrollbar { display: none; }
+    .settings-tab { display: flex; align-items: center; gap: 12px; padding: 14px; border: none; background: transparent; border-radius: 16px; cursor: pointer; color: var(--text); transition: .25s; font-size: 15px; font-weight: 500; }
+    .settings-tab:hover { background: rgba(11,95,255,.08); color: var(--primary); }
+    .settings-tab.active { background: var(--primary); color: white; }
+    .settings-card { background: var(--card); border: 1px solid var(--border); border-radius: 28px; padding: 28px; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+    .profile-top { display: flex; align-items: center; gap: 18px; margin-bottom: 28px; }
+    .settings-avatar { width: 82px; height: 82px; border-radius: 50%; object-fit: cover; background: var(--card); border: 1px solid var(--border); }
+    .profile-top h3 { font-size: 22px; margin-bottom: 6px; font-weight: 700; }
+    .profile-top p { color: var(--muted); font-size: 14px; }
+    .settings-form { display: grid; gap: 18px; }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-group label { font-size: 14px; color: var(--text); font-weight: 600; }
+    .input-group input, .input-group textarea { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; color: var(--text); font: inherit; outline: none; transition: .25s ease; }
+    .input-group input:focus, .input-group textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(11,95,255,.1); }
+    .input-group textarea { min-height: 120px; resize: vertical; }
+    .btn { border: none; padding: 14px 18px; border-radius: 14px; cursor: pointer; font-size: 15px; transition: .25s; width: max-content; font-weight: 600; }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { opacity: .9; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(11,95,255,.2); }
+    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+    .btn-ghost:hover { background: var(--bg); border-color: var(--primary); color: var(--primary); }
+    @media(max-width:900px) { .settings-grid { grid-template-columns: 1fr; } .settings-sidebar { flex-direction: row; overflow-x: auto; overflow-y: hidden; } .settings-tab { min-width: max-content; } .settings-top { flex-direction: column; align-items: flex-start; } .settings-actions { justify-content: flex-start; } .back-store-btn { width: auto; } }
+    @media(max-width:768px) { .settings-title-wrap h1 { font-size: 32px; } .settings-card { padding: 18px; border-radius: 24px; } .profile-top { flex-direction: column; align-items: center; text-align: center; } }
+  </style>
+</head>
+
+<body>
+
+<section class="section settings-page">
+
+  <div class="container">
+
+    <div class="settings-top">
+
+      <div class="settings-title-wrap">
+        <h1 data-i18n="settings.title">Profile Settings</h1>
+        <div class="settings-sub" data-i18n="settings.subtitle">
+          Manage your account, addresses, and preferences.
+        </div>
+      </div>
+
+      <div class="settings-actions">
+        <a href="#" class="back-store-btn" onclick="goToHome()" data-i18n="settings.shop">
+          ← Back to Store
+        </a>
+      </div>
+
+      <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">
+        <!-- Sun -->
+        <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+          <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+        </svg>
+
+        <!-- Moon -->
+        <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <div class="settings-grid">
+
+      <!-- LEFT -->
+      <div class="settings-sidebar">
+
+        <button
+          class="settings-tab active"
+          data-section="accountSection"
+        >
+          <i class="icon-user"></i>
+          <span data-i18n="settings.account">Account</span>
+        </button>
+
+        <button
+          class="settings-tab"
+          data-section="addressSection"
+        >
+          <i class="icon-map-pin"></i>
+          <span data-i18n="settings.addresses">Addresses</span>
+        </button>
+
+        <button
+          class="settings-tab"
+          data-section="notificationsSection"
+        >
+          <i class="icon-bell"></i>
+          <span data-i18n="settings.notifications">Notifications</span>
+        </button>
+
+        <button
+          class="settings-tab"
+          data-section="securitySection"
+        >
+          <i class="icon-shield"></i>
+          <span data-i18n="settings.security">Security</span>
+        </button>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="settings-content">
+
+        <!-- ACCOUNT -->
+        <div
+          class="settings-card settings-section active"
+          id="accountSection"
+        >
+
+          <div class="profile-top">
+
+            <img
+              id="settingsAvatar"
+              class="settings-avatar"
+              src="https://ui-avatars.com/api/?name=User"
+            >
+
+            <div>
+              <h3 id="settingsName" data-i18n="settings.userName">
+                User Name
+              </h3>
+
+              <p id="settingsEmail" data-i18n="settings.userEmail">
+                user@email.com
+              </p>
+            </div>
+
+          </div>
+
+          <div class="settings-form">
+
+            <div class="input-group">
+              <label data-i18n="settings.fullName">Full Name</label>
+
+              <input
+                type="text"
+                id="fullName"
+                placeholder="Enter your full name"
+                data-i18n-placeholder="settings.fullName"
+              >
+            </div>
+
+            <div class="input-group">
+              <label data-i18n="settings.phoneNumber">Phone Number</label>
+
+              <input
+                type="text"
+                id="phoneNumber"
+                placeholder="Enter your phone number"
+                data-i18n-placeholder="settings.phoneNumber"
+              >
+            </div>
+
+            <button
+              class="btn btn-primary"
+              id="saveProfileBtn"
+              data-i18n="settings.saveChanges"
+            >
+              Save Changes
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- ADDRESS -->
+        <div
+          class="settings-card settings-section"
+          id="addressSection"
+        >
+
+          <div class="settings-form">
+
+            <div class="input-group">
+              <label data-i18n="settings.city">City</label>
+
+              <input
+                type="text"
+                id="city"
+                placeholder="Your city"
+                data-i18n-placeholder="settings.city"
+              >
+            </div>
+
+            <div class="input-group">
+              <label data-i18n="settings.postalCode">Postal Code</label>
+
+              <input
+                type="text"
+                id="postalCode"
+                placeholder="Postal code"
+                data-i18n-placeholder="settings.postalCode"
+              >
+            </div>
+
+            <div class="input-group">
+              <label data-i18n="settings.address">Address</label>
+
+              <textarea
+                id="address"
+                placeholder="Your full address"
+                data-i18n-placeholder="settings.address"
+              ></textarea>
+            </div>
+
+            <button
+              class="btn btn-primary"
+              id="saveAddressBtn"
+              data-i18n="settings.saveAddress"
+            >
+              Save Address
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- NOTIFICATIONS -->
+        <div
+          class="settings-card settings-section"
+          id="notificationsSection"
+        >
+
+          <div class="settings-form">
+
+            <label class="settings-switch">
+              <input type="checkbox" checked>
+              <span data-i18n="settings.emailNotifications">Email Notifications</span>
+            </label>
+
+            <label class="settings-switch">
+              <input type="checkbox" checked>
+              <span data-i18n="settings.orderUpdates">Order Updates</span>
+            </label>
+
+            <label class="settings-switch">
+              <input type="checkbox">
+              <span data-i18n="settings.promotions">Promotions & Discounts</span>
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- SECURITY -->
+        <div
+          class="settings-card settings-section"
+          id="securitySection"
+        >
+
+          <div class="settings-form">
+
+            <div class="input-group">
+              <label data-i18n="settings.connectedProvider">Connected Provider</label>
+
+              <input
+                type="text"
+                value="Google"
+                disabled
+              >
+            </div>
+
+            <div class="input-group">
+              <label data-i18n="settings.email">Email</label>
+
+              <input
+                type="text"
+                id="securityEmail"
+                disabled
+              >
+            </div>
+
+            <button
+              class="btn btn-ghost"
+              id="logoutSettingsBtn"
+              data-i18n="settings.logout"
+            >
+              Logout
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+
+  function goToHome() {
+    if (window.location.pathname.includes("/collections/")) {
+      window.location.href = "../index.html";
+    } else {
+      window.location.href = "index.html";
+    }
+  }
+
+  const tabs = document.querySelectorAll(".settings-tab");
+  const sections = document.querySelectorAll(".settings-section");
+
+  tabs.forEach(tab => {
+
+    tab.addEventListener("click", () => {
+
+      tabs.forEach(t => t.classList.remove("active"));
+      sections.forEach(s => s.classList.remove("active"));
+
+      tab.classList.add("active");
+
+      const sectionId = tab.dataset.section;
+      document.getElementById(sectionId).classList.add("active");
+
+    });
+
+  });
+
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    setLanguage(savedLanguage);
+  });
+</script>
+
+<script type="module" src="settings.js"></script>
+
+</body>
+</html>

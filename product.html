@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — HM Bijoux</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="main.css">
+  <script src="translations.js"></script>
+</head>
+    <body>
+      <header class="site-header">
+        <div class="container header-inner">
+          <a href="index.html" class="brand">HM Bijoux</a>
+          <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="index.html#products" data-i18n="nav.products">Products</a>
+            <a href="index.html#collections" data-i18n="nav.collections">Collections</a>
+            <a href="index.html#about" data-i18n="nav.about">About</a>
+          </nav>
+          <div class="header-actions">
+            <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Menu" aria-expanded="false" style="display:none;">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12h18M3 6h18M3 18h18"/>
+              </svg>
+            </button>
+            <button id="cartBtn" class="cart-btn" type="button" aria-label="View cart" aria-describedby="cartCount" aria-expanded="false">
+              <span class="cart-count" id="cartCount">0</span>
+              <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 6h15l-1.5 9h-12z" /><circle cx="9" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/></svg>
+            </button>
+
+            <div id="userMenu" class="user-menu" style="position:relative; display:none;">
+              <img id="userAvatar" class="user-avatar" />
+
+              <div id="userDropdown" class="user-dropdown">
+                <div class="user-info">
+                  <img id="userAvatarLarge" />
+                  <div>
+                    <div id="userName"></div>
+                    <div id="userEmail"></div>
+                  </div>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
+                <button class="dropdown-item" id="ordersBtn">
+                  <span class="item-left">
+                    <i data-lucide="receipt"></i>
+                    <span data-i18n="menu.orders">My Orders</span>
+                  </span>
+                </button>
+
+                <button class="dropdown-item" id="profileBtn">
+                  <span class="item-left">
+                    <i data-lucide="settings"></i>
+                    <span data-i18n="menu.profile">Profile Settings</span>
+                  </span>
+                </button>
+
+                <div class="dropdown-divider"></div>
+
+                <!-- Language Selector -->
+                <div class="language-section">
+                  <div class="language-label"><i data-lucide="globe"></i><span data-i18n="menu.language">Language</span></div>
+                  <div class="language-selector">
+                    <div class="language-option" data-lang="en">
+                      <span class="lang-flag">🇺🇸</span>
+                      <span>English</span>
+                    </div>
+                    <div class="language-option" data-lang="ar">
+                      <span class="lang-flag">🇲🇦</span>
+                      <span>العربية</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dropdown-divider"></div>
+
+                <button class="dropdown-item logout" id="logoutBtn">
+                  <span class="item-left">
+                    <i data-lucide="log-out"></i>
+                    <span data-i18n="menu.logout">Logout</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <button id="googleLoginBtn" class="google-login-btn">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="16" height="16">
+              <span data-i18n="btn.loginGoogle">Login with Google</span>
+            </button>
+
+            <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">
+          <!-- Sun -->
+          <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+            <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+          </svg>
+
+          <!-- Moon -->
+          <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </button>
+          </div>
+        </div>
+      </header>
+
+      <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu-overlay"></div>
+        <div class="mobile-menu-content">
+          <div class="mobile-menu-header">
+            <div class="brand">HM Bijoux</div>
+            <button id="closeMobileMenu" class="close-mobile-menu" aria-label="Close menu">×</button>
+          </div>
+
+          <div class="mobile-menu-body">
+            <nav class="mobile-nav">
+              <a href="index.html#products" data-i18n="nav.products">Products</a>
+              <a href="index.html#collections" data-i18n="nav.collections">Collections</a>
+              <a href="index.html#about" data-i18n="nav.about">About</a>
+            </nav>
+
+            <div class="mobile-user-section" style="display:none;">
+              <button class="mobile-menu-item" id="mobileOrdersBtn">
+                <i data-lucide="receipt"></i>
+                <span data-i18n="menu.orders">My Orders</span>
+              </button>
+              <button class="mobile-menu-item" id="mobileProfileBtn">
+                <i data-lucide="settings"></i>
+                <span data-i18n="menu.profile">Profile Settings</span>
+              </button>
+              <div class="mobile-divider"></div>
+              <button class="mobile-menu-item logout" id="mobileLogoutBtn">
+                <i data-lucide="log-out"></i>
+                <span data-i18n="menu.logout">Logout</span>
+              </button>
+            </div>
+            <!-- Language Selector -->
+            <div class="mobile-language-section">
+              <div class="mobile-language-label">
+                <i data-lucide="globe"></i>
+                <span data-i18n="menu.language">Language</span>
+              </div>
+              <div class="mobile-language-selector">
+                <div class="language-option" data-lang="en">
+                  <span class="lang-flag">🇺🇸</span>
+                  <span>English</span>
+                </div>
+                <div class="language-option" data-lang="ar">
+                  <span class="lang-flag">🇲🇦</span>
+                  <span>العربية</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Theme toggle -->
+            <button id="mobileThemeToggle" class="mobile-menu-item theme-item">
+              <div class="theme-toggle-icons">
+                <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </div>
+              <span data-i18n="menu.theme">Theme</span>
+            </button>
+            <button class="mobile-menu-item google-login-btn" id="mobileGoogleLoginBtn">
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="16">
+              <span data-i18n="btn.loginGoogle">Login with Google</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <main class="section">
+        <div class="container">
+          <div id="productRoot" class="product-root">
+            <!-- Product content injected here -->
+          </div>
+        </div>
+      </main>
+      <!-- CART PANEL (copied from index.html so cart opens on product page) -->
+      <aside id="cartPanel" class="cart-panel" aria-hidden="true" role="dialog" aria-label="Shopping cart">
+      <div class="cart-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <h3 data-i18n="yourCart">Your Cart</h3>
+          <span class="cart-badge-summary" id="cartCountSummary">0 items</span>
+        </div>
+        <button id="closeCart" class="close-cart" aria-label="Close cart">×</button>
+      </div>
+
+      <div id="cartItems" class="cart-items" role="list">
+        <!-- items injected here -->
+      </div>
+
+      <div class="cart-empty" id="cartEmpty" style="display:none; padding:28px; text-align:center; color:var(--muted);">
+        <span data-i18n="cart.empty">Your cart is empty.</span><br>
+        <small data-i18n="cart.emptySub">Add something nice ✨</small>
+      </div>
+
+      <div class="cart-footer">
+        <div class="cart-totals-row">
+          <div data-i18n="cart.subtotal">Subtotal</div>
+          <div id="cartTotal">0</div>
+        </div>
+        <button class="checkout-btn" id="checkoutBtn" data-i18n="cart.checkout">Checkout</button>
+        <button class="clear-cart-btn" id="clearCartBtn" style="margin-top:8px; width:100%; background:transparent; color:var(--primary); border:1px solid rgba(11,95,255,0.08);" data-i18n="cart.clear">Clear Cart</button>
+      </div>
+    </aside>
+
+      <!-- aria-live region for cart announcements (visually hidden) -->
+      <div id="cartLive" aria-live="polite" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;border:0;padding:0;margin:-1px;"> </div>
+
+      <!-- QUICK VIEW MODAL (present so quick-view can open on product page) -->
+      <div id="quickViewModal" class="quick-view-modal" aria-hidden="true">
+        <div class="qv-overlay"></div>
+        <div class="qv-content">
+          <button id="qvClose" class="qv-close">&times;</button>
+          <div class="qv-body">
+            <img id="qvImage" src="" alt="">
+            <div class="qv-info">
+              <h3 id="qvTitle"></h3>
+              <p id="qvDesc"></p>
+              <span id="qvPrice"></span>
+              <button id="qvAddBtn" class="add-btn" data-i18n="btn.addToCart">Add to Cart</button>
+              <button id="buyNowBtn" class="buy-now-btn" data-i18n="product.buyNow">${t('product.buyNow')}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+<div id="confirmModal" class="confirm-modal" aria-hidden="true">
+  <div class="confirm-backdrop"></div>
+
+  <div class="confirm-box">
+    <div class="confirm-title" id="confirmTitle">Are you sure?</div>
+
+    <div class="confirm-actions">
+      <button id="confirmCancel" class="confirm-btn cancel">Cancel</button>
+      <button id="confirmOk" class="confirm-btn ok">Delete</button>
+    </div>
+  </div>
+</div>
+  
+      <script src="utils.js"></script>
+      <script src="cart.js"></script>
+      <script src="qv.js"></script>
+      <script src ="https://unpkg.com/lucide@latest"></script>
+      <script type="module" src="app.js"></script>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+          const mobileMenu = document.getElementById('mobileMenu');
+          const closeMobileMenu = document.getElementById('closeMobileMenu');
+          const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+          const mobileNavLinks = mobileMenu?.querySelectorAll('.mobile-nav a');
+
+          const closeMenu = () => {
+            if (!mobileMenu) return;
+            mobileMenu.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+          };
+
+          mobileMenuBtn?.addEventListener('click', () => {
+            if (!mobileMenu) return;
+            mobileMenu.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          });
+
+          closeMobileMenu?.addEventListener('click', closeMenu);
+          mobileOverlay?.addEventListener('click', closeMenu);
+
+          mobileNavLinks?.forEach((link) => {
+            link.addEventListener('click', closeMenu);
+          });
+
+          const mobileOrdersBtn = document.getElementById('mobileOrdersBtn');
+          const mobileProfileBtn = document.getElementById('mobileProfileBtn');
+
+          mobileOrdersBtn?.addEventListener('click', () => {
+            closeMenu();
+            window.location.href = 'orders.html';
+          });
+
+          mobileProfileBtn?.addEventListener('click', () => {
+            closeMenu();
+            window.location.href = 'settings.html';
+          });
+
+          const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+          mobileThemeToggle?.addEventListener('click', () => {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            closeMenu();
+          });
+
+          const langOptions = mobileMenu?.querySelectorAll('.language-option');
+          langOptions?.forEach(option => {
+            option.addEventListener('click', () => {
+              const lang = option.getAttribute('data-lang');
+              setLanguage(lang);
+              closeMenu();
+            });
+          });
+          const desktopLangOptions = document.querySelectorAll('#userDropdown .language-option');
+          desktopLangOptions.forEach(option => {
+            option.addEventListener('click', () => {
+              const lang = option.getAttribute('data-lang');
+              setLanguage(lang);
+            });
+          });
+
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu?.getAttribute('aria-hidden') === 'false') {
+              closeMenu();
+            }
+          });
+        });
+      </script>
+      <script type="module">
+        import { supabase } from "./supabase.js";
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    const root = document.getElementById("productRoot");
+
+    function emptyState() {
+      root.innerHTML = `
+        <div style="padding:40px">
+          ${t('product.noProductSelected')}
+          <a href="index.html">${t('product.home')}</a>.
+        </div>
+      `;
+    }
+    root.innerHTML = t('common.loading');
+    function getIcon(type) {
+        if (type === "success") {
+          return `<svg class="toast-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M5 13l4 4L19 7" stroke="#34c759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>`;
+        }
+
+        if (type === "error") {
+          return `<svg class="toast-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6l-12 12" stroke="#ff3b30" stroke-width="2" stroke-linecap="round"/>
+          </svg>`;
+        }
+
+        return `<svg class="toast-icon" viewBox="0 0 24 24" fill="none">
+          <path d="M12 9v4M12 17h.01M10.29 3.86l-7.4 12.8A2 2 0 004.63 20h14.74a2 2 0 001.74-3.04l-7.4-12.8a2 2 0 00-3.42 0z"
+          stroke="#ff9500" stroke-width="2" stroke-linecap="round"/>
+        </svg>`;
+      }
+
+      function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        if (!container) return;
+
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+
+        toast.innerHTML = `
+          ${getIcon(type)}
+          <div class="toast-text">${message}</div>
+          <div class="toast-progress">
+            <div class="toast-progress-bar"></div>
+          </div>
+        `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+          toast.style.animation = "toastOut 0.25s ease forwards";
+          setTimeout(() => toast.remove(), 250);
+        }, 2500);
+
+        if (container.children.length > 3) {
+          container.firstChild.remove();
+        }
+      }
+    async function loadProduct() {
+      if (!id) return emptyState();
+
+      const { data: prod, error } = await supabase
+        .from("products")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error || !prod) {
+        console.error(error);
+        return emptyState();
+      }
+
+      // Product images
+      const { data: images } = await supabase
+        .from("product_images")
+        .select("*")
+        .eq("product_id", id);
+
+      // Variants
+      const { data: variants } = await supabase
+        .from("product_variants")
+        .select("*")
+        .eq("product_id", id);
+
+      // Reviews
+      const { data: reviews } = await supabase
+        .from("reviews")
+        .select("*")
+        .eq("product_id", id)
+        .order("created_at", { ascending: false });
+
+      prod.product_images = images || [];
+      prod.product_variants = variants || [];
+      prod.reviews = reviews || [];
+      window.currentProduct = prod;
+      document.title = `${prod.name} — HM Bijoux`;
+
+      renderProduct(prod);
+    }
+
+    async function renderProduct(prod) {
+      root.innerHTML = "";
+      
+      console.log("IMAGES:", prod.product_images);
+      
+      const images = prod.product_images || [];
+      const variants = prod.product_variants || [];
+
+      const colors = [...new Set((variants || []).map(v => v.color).filter(Boolean))];
+      const sizes = [...new Set((variants || []).map(v => v.size).filter(Boolean))];
+      function isVariantOutOfStock(color, size) {
+        const list = variants || [];
+
+        return !list.some(v => {
+          const matchColor = color ? v.color === color : true;
+          const matchSize = size ? v.size === size : true;
+
+          return matchColor && matchSize && v.stock > 0;
+        });
+      }
+      const imgs = images?.length
+        ? images.map(i => i.image_url)
+        : [prod.image_url];
+      
+      // GROUP VARIANTS
+      function getVariant() {
+        if (!selectedColor && !selectedSize) return null;
+
+        return (variants || []).find(v =>
+          (selectedColor ? v.color === selectedColor : true) &&
+          (selectedSize ? v.size === selectedSize : true)
+        ) || null;
+      }
+
+      // DEFAULT STOCK
+      let selectedColor = null;
+      let selectedSize = null;
+      function getStock() {
+        if (!variants || variants.length === 0) {
+          return prod.stock ?? 0;
+        }
+
+        const v = getVariant();
+        return v?.stock ?? 0;
+      }
+      
+
+      // ===== UI =====
+      root.innerHTML = `
+    <div class="product-page apple-product">
+
+      <div class="product-gallery">
+        <div class="main-image-wrapper">
+          <img id="mainImg" src="${imgs[0]}" class="main-image">
+        </div>
+
+        <div class="thumbs">
+          ${imgs.map((img, i) => `
+            <img src="${img}" data-i="${i}" class="thumb">
+          `).join("")}
+        </div>
+      </div>
+
+      <div class="product-info-card">
+
+        <div class="product-title">
+          ${prod.name}
+        </div>
+
+        <div class="product-price" id="priceDisplay">
+          ${formatCurrency(prod.price)}
+        </div>
+
+        <div class="product-desc">
+          ${prod.full_description || prod.description || ""}
+        </div>
+
+        <div class="variant-section">
+
+          ${colors.length ? `
+            <div class="variant-block">
+              <div class="variant-label" data-i18n="product.color">Color</div>
+              <div class="variant-options">
+                ${colors.map(c => `
+                  <button class="variant-btn color-btn" data-color="${c}">
+                    ${c}
+                  </button>
+                `).join("")}
+              </div>
+            </div>
+          ` : ""}
+
+          ${sizes.length ? `
+            <div class="variant-block">
+              <div class="variant-label" data-i18n="product.size">Size</div>
+              <div class="variant-options">
+                ${sizes.map(s => `
+                  <button class="variant-btn size-btn" data-size="${s}">
+                    ${s}
+                  </button>
+                `).join("")}
+              </div>
+            </div>
+          ` : ""}
+
+        </div>
+
+        <div id="stockDisplay" class="stock-badge"></div>
+
+        <button id="addToCartBtn" class="add-to-cart-btn" data-i18n="btn.addToCart">
+          Add to Cart
+        </button>
+
+      </div>
+    </div>
+    <section class="reviews-section">
+      <div id="reviewsRoot">
+        <div class="reviews-loading">${t('product.loadingReviews')}</div>
+      </div>
+    </section>
+    `;
+
+    function syncActiveStates() {
+      document.querySelectorAll(".color-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.color === selectedColor);
+      });
+
+      document.querySelectorAll(".size-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.size === selectedSize);
+      });
+    }
+
+    function refreshVariantStates() {
+      document.querySelectorAll(".color-btn").forEach(btn => {
+        const color = btn.dataset.color;
+        const disabled = isVariantOutOfStock(color, selectedSize);
+
+        btn.disabled = disabled;
+        btn.classList.toggle("disabled", disabled);
+      });
+
+      document.querySelectorAll(".size-btn").forEach(btn => {
+        const size = btn.dataset.size;
+        const disabled = isVariantOutOfStock(selectedColor, size);
+
+        btn.disabled = disabled;
+        btn.classList.toggle("disabled", disabled);
+      });
+    }
+
+
+    // ===== CLICK HANDLERS (ONLY ONCE) =====
+    document.querySelectorAll(".color-btn").forEach(btn => {
+      const color = btn.dataset.color;
+
+      btn.addEventListener("click", () => {
+
+        if (selectedColor === color) {
+          selectedColor = null;
+        } else {
+          selectedColor = color;
+        }
+        // fix invalid combo
+        if (selectedColor && selectedSize && isVariantOutOfStock(selectedColor, selectedSize)) {
+          selectedSize = null;
+        }
+
+        syncActiveStates();
+        updateUI();
+        refreshVariantStates();
+      });
+    });
+
+    document.querySelectorAll(".size-btn").forEach(btn => {
+      const size = btn.dataset.size;
+
+      btn.addEventListener("click", () => {
+        // 🔁 TOGGLE
+        if (selectedSize === size) {
+          selectedSize = null;
+        } else {
+          selectedSize = size;
+        }
+
+        // fix invalid combo
+        if (selectedColor && selectedSize && isVariantOutOfStock(selectedColor, selectedSize)) {
+          selectedColor = null;
+        }
+
+        syncActiveStates();
+        updateUI();
+        refreshVariantStates();
+      });
+    });
+
+    function animate(el) {
+      el.classList.remove("fade-update");
+      void el.offsetWidth; // restart animation
+      el.classList.add("fade-update");
+    }
+
+      // ===== VARIANT LOGIC =====
+      const stockDisplay = document.getElementById("stockDisplay");
+      const priceDisplay = document.getElementById("priceDisplay"); 
+      function updateUI() {
+        const v = getVariant();
+
+        let stock;
+        let price;
+
+        if ((variants || []).length === 0) {
+          stock = prod.stock ?? 0;
+          price = prod.price;
+        } else if (!selectedColor && !selectedSize) {
+          stock = null;
+          price = prod.price;
+        } else {
+          stock = v?.stock ?? 0;
+          price = v?.price ?? prod.price;
+        }
+
+        stockDisplay.textContent =
+          stock === null ? t('product.selectOptions') : t('product.stock') + ": " + stock;
+
+        priceDisplay.textContent = formatCurrency(price);
+
+        const btn = document.getElementById("addToCartBtn");
+        btn.disabled = stock === null || stock <= 0;
+      }
+
+      window.updateUI = updateUI;
+      updateUI();
+      refreshVariantStates();
+    
+      // ===== ADD TO CART =====
+      const btn = document.getElementById("addToCartBtn");
+
+      btn.addEventListener("click", () => {
+        const stock = getStock();
+
+        const hasColors = colors.length > 0;
+        const hasSizes = sizes.length > 0;
+
+
+        const existing = (window.cart || []).find(item =>
+          item.id === prod.id &&
+          item.selectedColor === selectedColor &&
+          item.selectedSize === selectedSize
+        );
+
+        const currentQty = existing?.qty || 0;
+
+        if (hasColors && !selectedColor) {
+          showToast(t('product.selectColor'), "warning");
+          return;
+        }
+
+        if (hasSizes && !selectedSize) {
+          showToast(t('product.selectSize'), "warning");
+          return;
+        }
+
+        if (currentQty + 1 > stock) {
+          showToast(t('product.maxStock'), "error");
+          return;
+        }
+
+        const v = getVariant();
+
+        const price = v?.price ?? prod.price;
+
+        window.addToCart({
+          id: prod.id,
+          name: prod.name,
+          price: price,
+          img: document.querySelector(".main-image")?.src || imgs?.[0] || "",
+          selectedColor,
+          selectedSize
+        });
+        const cartBtn = document.getElementById("cartBtn");
+
+        if (cartBtn) {
+          cartBtn.classList.remove("cart-pulse", "cart-glow");
+          void cartBtn.offsetWidth;
+          cartBtn.classList.add("cart-pulse", "cart-glow");
+        }
+
+        showToast(t('product.addedToCart'), "success");
+      });
+      
+      const modal = document.getElementById("imgModal");
+      const modalImg = document.getElementById("imgModalContent");
+
+    // Main image: single click opens preview
+    document.getElementById("mainImg").addEventListener("click", () => {
+      modal.style.display = "flex";
+      modalImg.src = document.getElementById("mainImg").src;
+    });
+
+    // Thumbnails: click to change image
+    document.querySelectorAll(".thumbs img").forEach(img => {
+      img.addEventListener("click", () => {
+        document.getElementById("mainImg").src = img.src;
+      });
+    });
+
+    // Close modal
+    modal.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+    setTimeout(() => {
+      setLanguage(window.currentLanguage || 'en');
+    }, 0);
+
+    // Re-apply translations to dynamically generated elements
+    if (window.setLanguage) {
+      const lang = window.currentLanguage || 'en';
+      setLanguage(lang);
+    }
+    await renderReviews(prod);
+    window.currentProduct = prod;
+    }
+
+    function customConfirm(message) {
+  return new Promise((resolve) => {
+    const modal = document.getElementById("confirmModal");
+    const title = document.getElementById("confirmTitle");
+    const okBtn = document.getElementById("confirmOk");
+    const cancelBtn = document.getElementById("confirmCancel");
+
+    title.textContent = message;
+    modal.classList.add("show");
+
+    const cleanup = () => {
+      modal.classList.remove("show");
+      okBtn.onclick = null;
+      cancelBtn.onclick = null;
+    };
+
+    okBtn.onclick = () => {
+      cleanup();
+      resolve(true);
+    };
+
+    cancelBtn.onclick = () => {
+      cleanup();
+      resolve(false);
+    };
+  });
+}
+
+    async function renderReviews(prod) {
+  const reviewsRoot = document.getElementById("reviewsRoot");
+  if (!reviewsRoot) return;
+
+  const reviews = prod.reviews || [];
+
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+
+  const user = session?.user || null;
+  const userId = user?.id || null;
+
+  const myReview = reviews.find(r => r.user_id === userId);
+
+  const avg =
+    reviews.length > 0
+      ? (
+          reviews.reduce((sum, r) => sum + (r.rating || 0), 0) /
+          reviews.length
+        ).toFixed(1)
+      : "0.0";
+
+  function stars(rating) {
+    let html = "";
+
+    for (let i = 1; i <= 5; i++) {
+      html += `
+        <i
+          data-lucide="star"
+          class="review-star-icon ${i <= rating ? "filled" : ""}"
+        ></i>
+      `;
+    }
+
+    return html;
+  }
+
+  function formatDate(date) {
+    const lang = window.currentLanguage || "en";
+
+    return new Date(date).toLocaleDateString(
+      lang === "ar" ? "ar-MA" : "en-US",
+      {
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+      }
+    );
+  }
+
+  function getReviewCountText(count) {
+    const key = count === 1
+      ? "reviews.count.one"
+      : "reviews.count.other";
+
+    return `${count} ${t(key)}`;
+  }
+
+  // ===== REVIEW FORM =====
+  const reviewForm = user
+    ? `
+      <div class="review-form-card">
+        <h3>${t(myReview ? "reviews.edit" : "reviews.write")}</h3>
+
+        <div class="review-stars-input" id="reviewStarsInput">
+          ${[1, 2, 3, 4, 5]
+            .map(
+              n => `
+                <button
+                  type="button"
+                  class="review-star-btn ${n <= (myReview?.rating || 0) ? "active" : ""}"
+                  data-rating="${n}"
+                >
+                  <i data-lucide="star"></i>
+                </button>
+              `
+            )
+            .join("")}
+        </div>
+
+        <textarea
+          id="reviewComment"
+          class="review-textarea"
+          rows="4"
+          maxlength="1000"
+          placeholder="${t("reviews.placeholder")}"
+        >${myReview?.comment || ""}</textarea>
+
+        <div class="review-form-actions">
+          <button id="submitReviewBtn" class="add-to-cart-btn">
+            ${t(myReview ? "reviews.update" : "reviews.submit")}
+          </button>
+
+          ${myReview ? `
+            <button
+              id="deleteReviewBtn"
+              type="button"
+              class="delete-review-btn"
+            >
+              ${t("reviews.delete")}
+            </button>
+          ` : ""}
+        </div>
+      </div>
+    `
+    : `
+      <div class="review-login-card">
+        ${t("reviews.loginRequired")}
+      </div>
+    `;
+
+  // ===== REVIEWS LIST =====
+  const reviewsList =
+    reviews.length > 0
+      ? reviews
+          .map(r => {
+            const metadata = r.user_metadata || {};
+
+            const avatar =
+              metadata.avatar_url ||
+              metadata.picture ||
+              "https://ui-avatars.com/api/?name=User";
+
+            const name =
+              metadata.full_name ||
+              metadata.name ||
+              metadata.email ||
+              t("reviews.customer");
+
+            return `
+              <div class="review-card">
+                <img class="review-avatar" src="${avatar}" alt="${name}">
+                <div class="review-content">
+                  <div class="review-header">
+                    <div class="review-author">${name}</div>
+                    <div class="review-date">${formatDate(r.created_at)}</div>
+                  </div>
+
+                  <div class="review-rating">
+                    ${stars(r.rating)}
+                  </div>
+
+                  <div class="review-comment">
+                    ${r.comment || ""}
+                  </div>
+                </div>
+              </div>
+            `;
+          })
+          .join("")
+      : `
+        <div class="no-reviews">
+          ${t("reviews.noReviews")}
+        </div>
+      `;
+
+  // ===== MAIN HTML =====
+  reviewsRoot.innerHTML = `
+    <div class="reviews-header">
+      <h2>${t("reviews.title")}</h2>
+
+      <div class="reviews-summary">
+        <span class="reviews-average">${avg}</span>
+        <span class="reviews-stars">${stars(Math.round(avg))}</span>
+        <span class="reviews-count">
+          (${getReviewCountText(reviews.length)})
+        </span>
+      </div>
+    </div>
+
+    ${reviewForm}
+
+    <div class="reviews-list">
+      ${reviewsList}
+    </div>
+  `;
+
+  // ===== FORM EVENTS =====
+  if (user) {
+    let selectedRating = myReview?.rating || 0;
+
+    const starButtons = reviewsRoot.querySelectorAll(".review-star-btn");
+    const submitBtn = document.getElementById("submitReviewBtn");
+
+    starButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        selectedRating = Number(btn.dataset.rating);
+
+        starButtons.forEach(star => {
+          star.classList.toggle(
+            "active",
+            Number(star.dataset.rating) <= selectedRating
+          );
+        });
+      });
+    });
+
+    submitBtn?.addEventListener("click", async () => {
+      const comment =
+        document.getElementById("reviewComment").value.trim();
+
+      if (!selectedRating) {
+        showToast(t("reviews.selectRating"), "warning");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = t("reviews.saving");
+
+      const payload = {
+        product_id: prod.id,
+        user_id: user.id,
+        rating: selectedRating,
+        comment,
+        user_metadata: {
+          full_name:
+            user.user_metadata?.full_name ||
+            user.user_metadata?.name ||
+            t("reviews.customer"),
+          email: user.email,
+          avatar_url:
+            user.user_metadata?.avatar_url ||
+            user.user_metadata?.picture ||
+            ""
+        }
+      };
+
+      const { error } = await supabase
+        .from("reviews")
+        .upsert(payload, {
+          onConflict: "product_id,user_id"
+        });
+
+      if (error) {
+        console.error(error);
+        showToast(error.message, "error");
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = t(
+          myReview ? "reviews.update" : "reviews.submit"
+        );
+        return;
+      }
+
+      showToast(t("reviews.saved"), "success");
+      await loadProduct();
+    });
+
+    // ===== DELETE REVIEW =====
+const deleteBtn = document.getElementById("deleteReviewBtn");
+
+deleteBtn?.addEventListener("click", async () => {
+  const confirmed = await customConfirm(t("reviews.deleteConfirm"));
+
+  if (!confirmed) return;
+
+  deleteBtn.disabled = true;
+  deleteBtn.textContent = t("reviews.deleting");
+
+  const { error } = await supabase
+    .from("reviews")
+    .delete()
+    .eq("product_id", prod.id)
+    .eq("user_id", user.id);
+
+  if (error) {
+    console.error("Delete review error:", error);
+    showToast(error.message, "error");
+
+    deleteBtn.disabled = false;
+    deleteBtn.textContent = t("reviews.delete");
+    return;
+  }
+
+  showToast(t("reviews.deleted"), "success");
+
+  // Reload product and reviews
+  await loadProduct();
+});
+  }
+
+  // Re-render Lucide icons
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+}
+    loadProduct();
+
+    // Listen for language changes to update currency symbols
+    window.addEventListener('languageChanged', async () => {
+      if (typeof window.updateUI === 'function') {
+        window.updateUI();
+      }
+
+      if (window.currentProduct) {
+        await renderReviews(window.currentProduct);
+      }
+    });
+
+    </script>
+    <div id="imgModal" style="
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.9);
+      justify-content:center;
+      align-items:center;
+      z-index:9999;
+    ">
+      <img id="imgModalContent" style="max-width:90%; max-height:90%; border-radius:12px;">
+    </div>
+    <div id="toastContainer"></div>
+    </body>
+    </html>

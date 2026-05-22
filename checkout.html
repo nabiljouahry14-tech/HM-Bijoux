@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="checkout.pageTitle">Checkout — HM Bijoux</title>
+<link rel="stylesheet" href="main.css">
+<style>
+  body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+section.section {
+  flex: 1;
+}
+  .checkout-container {
+    max-width: 700px;
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+
+  .checkout-container h2 {
+    font-size: clamp(24px, 6vw, 32px);
+    margin-bottom: 24px;
+  }
+
+  #cartSummary {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--card);
+    border-radius: 12px;
+    border: 1px solid rgba(15,23,42,0.04);
+  }
+
+  #checkoutForm {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  #checkoutForm input,
+  #checkoutForm button {
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    min-height: 44px;
+  }
+
+  #cartBtn {
+  display: none !important;
+}
+
+  #checkoutForm input {
+    border: 1px solid rgba(15,23,42,0.06);
+    background: var(--card);
+    color: var(--text);
+    transition: 0.2s;
+    direction: auto;
+    unicode-bidi: isolate-override;
+    text-align: start;
+  }
+
+  #checkoutForm input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(11,95,255,0.1);
+  }
+
+  #checkoutForm button {
+    background: linear-gradient(90deg, var(--primary), #2a7bff);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+    margin-top: 12px;
+  }
+
+  #checkoutForm button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(11,95,255,0.3);
+  }
+
+  .payment-section {
+    margin-top: 20px;
+    padding: 16px;
+    background: var(--card);
+    border-radius: 10px;
+    border: 1px solid rgba(15,23,42,0.04);
+  }
+
+  .payment-section h3 {
+    margin: 0 0 14px;
+    font-size: 16px;
+  }
+
+  .payment-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.15s;
+    min-height: 44px;
+  }
+
+  .payment-option:hover {
+    background: rgba(11,95,255,0.04);
+  }
+
+  .payment-option input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .payment-option.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 560px) {
+    .checkout-container {
+      margin: 24px auto;
+      padding: 0 12px;
+    }
+
+    .checkout-container h2 {
+      margin-bottom: 20px;
+    }
+
+    #cartSummary {
+      margin-bottom: 24px;
+      padding: 16px;
+    }
+
+    #checkoutForm input,
+    #checkoutForm button {
+      font-size: 15px;
+      padding: 11px 12px;
+    }
+
+    .payment-section {
+      padding: 12px;
+      margin-top: 16px;
+    }
+
+    .payment-option {
+      padding: 8px;
+      margin: 6px 0;
+      min-height: 40px;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../index.html" class="brand">HM Bijoux</a>
+
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <a href="#products" data-i18n="nav.products">Products</a>
+        <a href="#collections" data-i18n="nav.collections">Collections</a>
+        <a href="#about" data-i18n="nav.about">About</a>
+      </nav>
+
+      <div class="header-actions">
+        <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Menu" aria-expanded="false">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18M3 6h18M3 18h18"/>
+          </svg>
+        </button>
+        <button id="cartBtn" class="cart-btn" type="button" aria-label="View cart" aria-describedby="cartCount" aria-expanded="false" aria-controls="cartPanel">
+          <span class="cart-count" id="cartCount">0</span>
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M6 6h15l-1.5 9h-12z" />
+            <circle cx="9" cy="18" r="1.5"/>
+            <circle cx="18" cy="18" r="1.5"/>
+          </svg>
+        </button>
+
+        <div id="userMenu" class="user-menu" style="position:relative; display:none;">
+          <img id="userAvatar" class="user-avatar" />
+
+          <div id="userDropdown" class="user-dropdown">
+            <div class="user-info">
+              <img id="userAvatarLarge" />
+              <div>
+                <div id="userName"></div>
+                <div id="userEmail"></div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <button class="dropdown-item" id="ordersBtn">
+              <span class="item-left">
+                <i data-lucide="receipt"></i>
+                <span data-i18n="menu.orders">My Orders</span>
+              </span>
+            </button>
+
+            <button class="dropdown-item" id="profileBtn">
+              <span class="item-left">
+                <i data-lucide="settings"></i>
+                <span data-i18n="menu.profile">Profile Settings</span>
+              </span>
+            </button>
+
+            <div class="dropdown-divider"></div>
+
+            <!-- Language Selector -->
+            <div class="language-section">
+              <div class="language-label"><i data-lucide="globe"></i> <span data-i18n="menu.language">Language</span></div>
+              <div class="language-selector">
+                <div class="language-option" data-lang="en">
+                  <span class="lang-flag">🇺🇸</span>
+                  <span>English</span>
+                </div>
+                <div class="language-option" data-lang="ar">
+                  <span class="lang-flag">🇲🇦</span>
+                  <span>العربية</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <button class="dropdown-item logout" id="logoutBtn">
+              <span class="item-left">
+                <i data-lucide="log-out"></i>
+                <span data-i18n="menu.logout">Logout</span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <button id="googleLoginBtn" class="google-login-btn">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="16" height="16">
+          <span data-i18n="btn.loginGoogle">Login with Google</span>
+        </button>
+
+        <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle theme">
+    <!-- Sun -->
+    <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+        <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+    </svg>
+
+    <!-- Moon -->
+    <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+    </svg>
+</button>
+
+      </div>
+    </div>
+  </header>
+   <!-- MOBILE MENU -->
+  <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <div class="brand">HM Bijoux</div>
+        <button id="closeMobileMenu" class="close-mobile-menu" aria-label="Close menu">×</button>
+      </div>
+
+      <div class="mobile-menu-body">
+        <nav class="mobile-nav">
+          <a href="../index.html#products" data-i18n="nav.products">Products</a>
+          <a href="../index.html#collections" data-i18n="nav.collections">Collections</a>
+          <a href="../index.html#about" data-i18n="nav.about">About</a>
+        </nav>
+
+        <div class="mobile-user-section">
+          <button class="mobile-menu-item" id="mobileOrdersBtn">
+            <i data-lucide="receipt"></i>
+            <span data-i18n="menu.orders">My Orders</span>
+          </button>
+          <button class="mobile-menu-item" id="mobileProfileBtn">
+            <i data-lucide="settings"></i>
+            <span data-i18n="menu.profile">Profile Settings</span>
+          </button>
+          <div class="mobile-divider"></div>
+          <button class="mobile-menu-item logout" id="mobileLogoutBtn">
+            <i data-lucide="log-out"></i>
+            <span data-i18n="menu.logout">Logout</span>
+          </button>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="mobile-language-section">
+          <div class="mobile-language-label">
+            <i data-lucide="globe"></i>
+            <span data-i18n="menu.language">Language</span>
+          </div>
+          <div class="mobile-language-selector">
+            <div class="language-option" data-lang="en">
+              <span class="lang-flag">🇺🇸</span>
+              <span>English</span>
+            </div>
+            <div class="language-option" data-lang="ar">
+              <span class="lang-flag">🇲🇦</span>
+              <span>العربية</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Theme toggle -->
+        <button id="mobileThemeToggle" class="mobile-menu-item theme-item">
+          <div class="theme-toggle-icons">
+            <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none">
+              <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 1v3M12 20v3M4 12H1M23 12h-3M5.6 5.6L3.4 3.4M20.6 20.6l-2.2-2.2M3.4 20.6l2.2-2.2M20.6 3.4l-2.2 2.2" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </div>
+          <span data-i18n="menu.theme">Theme</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <div class="checkout-container">
+
+    <h2 data-i18n="checkout.title">Checkout</h2>
+
+    <div id="cartSummary"></div>
+
+    <form id="checkoutForm">
+
+      <input placeholder="Full Name" id="name" data-i18n-placeholder="checkout.fullname" dir="auto" required>
+      <input placeholder="Phone" id="phone" data-i18n-placeholder="checkout.phone" dir="auto" required>
+
+      <input placeholder="Address Line 1" id="line1" data-i18n-placeholder="checkout.address1" dir="auto" required>
+      <input placeholder="Address Line 2 (Optional)" id="line2" data-i18n-placeholder="checkout.address2" dir="auto">
+      <input placeholder="City" id="city" data-i18n-placeholder="checkout.city" dir="auto" required>
+      <input placeholder="Postal Code" id="postal" data-i18n-placeholder="checkout.postal" dir="auto" required>
+
+      <div class="payment-section">
+        <h3 data-i18n="checkout.payment">Payment Method</h3>
+
+        <label class="payment-option">
+          <input type="radio" name="payment_method" value="cod" checked>
+          <span data-i18n="checkout.cash">Cash on Delivery</span>
+        </label>
+
+        <label class="payment-option disabled">
+          <input type="radio" name="payment_method" value="card" disabled>
+          <span data-i18n="checkout.card">Pay with Card (Visa / Mastercard) — Coming soon</span>
+        </label>
+    </div>
+
+    <button type="submit" data-i18n="checkout.proceed">Proceed to Payment</button>
+
+  </form>
+
+</div>
+</div>
+</section>
+
+<script src="translations.js"></script>
+<script src="utils.js"></script>
+<script src="cart.js"></script>
+<script src="qv.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script type="module" src="app.js"></script>
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const form = document.getElementById("checkoutForm");
+const submitButton = form?.querySelector('button[type="submit"]');
+
+if (window.loadCartFromStorage) {
+  window.loadCartFromStorage();
+}
+
+function renderCartSummary() {
+  const el = document.getElementById("cartSummary");
+  if (!el) return;
+
+  const cart = window.cart || [];
+  const itemCount = cart.reduce((sum, item) => sum + (Number(item.qty) || 1), 0);
+
+  if (!cart.length) {
+    el.innerHTML = "<p>Your cart is empty</p>";
+    if (submitButton) submitButton.disabled = true;
+    return;
+  }
+
+  let total = 0;
+  el.innerHTML = `
+    <div style="margin-bottom:10px; font-weight:600;">${itemCount} item${itemCount!==1?'s':''}</div>
+  ` + cart.map(item => {
+    const price = Number(item.price || 0);
+    const qty = Number(item.qty || 1);
+    total += price * qty;
+
+    return `
+      <div style="border-bottom:1px solid #eee;padding:10px 0;">
+        <strong>${item.name}</strong><br>
+
+        ${item.selectedColor ? `Color: ${item.selectedColor}<br>` : ""}
+        ${item.selectedSize ? `Size: ${item.selectedSize}<br>` : ""}
+
+        Qty: ${qty}<br>
+        Price: ${formatCurrency(price)}
+      </div>
+    `;
+  }).join("") + `
+    <h3 style="margin-top:15px;">Total: ${formatCurrency(total)}</h3>
+  `;
+
+  if (submitButton) submitButton.disabled = false;
+}
+
+renderCartSummary();
+
+// Listen for language changes to update currency symbols
+window.addEventListener('languageChanged', () => {
+  renderCartSummary();
+});
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  if (!window.cart || window.cart.length === 0) {
+    alert("Cart empty");
+    return;
+  }
+
+  if (window.saveCartToStorage) {
+    window.saveCartToStorage();
+  }
+
+const {
+  data: { user }
+} = await supabase.auth.getUser();
+
+if (!user) {
+  alert("You must be logged in");
+  return;
+}
+
+const { data: address, error: addrError } = await supabase
+  .from("user_addresses")
+  .upsert(
+    {
+      user_id: user.id,
+      full_name: document.getElementById("name").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      address_line1: document.getElementById("line1").value.trim(),
+      address_line2: document.getElementById("line2").value.trim(),
+      city: document.getElementById("city").value.trim(),
+      postal_code: document.getElementById("postal").value.trim()
+    },
+    {
+      onConflict: "user_id"
+    }
+  )
+  .select()
+  .single();
+
+  if (addrError) {
+    console.error(addrError);
+    alert("Address error");
+    return;
+  }
+
+for (const item of window.cart) {
+  const { data: variant, error } = await supabase
+    .from("product_variants")
+    .select("stock")
+    .eq("product_id", item.id)
+    .eq("color", item.selectedColor)
+    .eq("size", item.selectedSize)
+    .single();
+
+  if (error || !variant || variant.stock < (item.qty || 1)) {
+    alert(`"${item.name}" is out of stock or changed.`);
+    return;
+  }
+}
+
+  const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+
+const { data: orderId, error: orderError } = await supabase.rpc(
+  "create_order_secure",
+  {
+    items: window.cart.map(i => ({
+      id: i.id,
+      qty: i.qty || 1,
+      color: i.selectedColor || null,
+      size: i.selectedSize || null
+    })),
+    addr_id: address.id,
+    payment_method: paymentMethod
+  }
+);
+
+if (orderError) {
+  console.error(orderError);
+
+  if (orderError.message.includes("stock")) {
+    alert("Oops! Some items are out of stock. Please refresh your cart.");
+  } else {
+    alert(orderError.message);
+  }
+
+  return;
+}
+
+// clear cart
+window.cart = [];
+if (window.saveCartToStorage) {
+  window.saveCartToStorage();
+}
+const res = await fetch("https://gickpnyixefuzunqxelt.supabase.co/functions/v1/bright-processor", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "apikey": supabase.supabaseKey,
+    "Authorization": `Bearer ${supabase.supabaseKey}`
+  },
+  body: JSON.stringify({
+    email: user.email,
+    orderId
+  })
+});
+
+const data = await res.json();
+console.log("EDGE RESPONSE:", data);
+
+window.location.href = "success.html";
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const savedLanguage = localStorage.getItem('language') || 'en';
+  setLanguage(savedLanguage);
+
+  // desktop language selector FIX
+  document.querySelectorAll('.language-option').forEach(option => {
+    option.addEventListener('click', () => {
+      const lang = option.getAttribute('data-lang');
+      setLanguage(lang);
+    });
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeMobileMenu = document.getElementById('closeMobileMenu');
+  const mobileOverlay = document.querySelector('.mobile-menu-overlay');
+
+  // OPEN
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  });
+
+  // CLOSE
+  const closeMenu = () => {
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  closeMobileMenu?.addEventListener('click', closeMenu);
+  mobileOverlay?.addEventListener('click', closeMenu);
+
+  // ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.getAttribute('aria-hidden') === 'false') {
+      closeMenu();
+    }
+  });
+});
+</script>
+</body>
+</html>

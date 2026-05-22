@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Account Suspended — HM Bijoux</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+:root{
+  --bg:#070707;
+  --card:#111111;
+  --card-2:#161616;
+  --border:rgba(255,255,255,0.08);
+
+  --text:#ffffff;
+  --muted:rgba(255,255,255,0.65);
+
+  --danger:#e11d48;
+  --danger-soft:rgba(225,29,72,0.12);
+
+  --shadow:
+    0 30px 80px rgba(0,0,0,0.65);
+
+  --radius:28px;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+  background:
+    radial-gradient(circle at top, rgba(225,29,72,0.12), transparent 35%),
+    #070707;
+  color:var(--text);
+  font-family:Inter,sans-serif;
+}
+
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
+}
+
+body.ar{
+  font-family:"Cairo",sans-serif;
+}
+
+.wrapper{
+  width:100%;
+  max-width:720px;
+}
+
+.card{
+  position:relative;
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.02),
+      rgba(255,255,255,0)
+    ),
+    var(--card);
+
+  border:1px solid rgba(225,29,72,0.20);
+
+  border-radius:var(--radius);
+
+  padding:42px;
+
+  box-shadow:var(--shadow);
+}
+
+.glow{
+  position:absolute;
+  inset:auto;
+  top:-140px;
+  right:-140px;
+
+  width:280px;
+  height:280px;
+
+  border-radius:50%;
+
+  background:rgba(225,29,72,0.14);
+
+  filter:blur(80px);
+
+  pointer-events:none;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:32px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:48px;
+  height:48px;
+
+  border-radius:14px;
+
+  background:rgba(255,255,255,0.04);
+
+  border:1px solid var(--border);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo i{
+  width:22px;
+  height:22px;
+}
+
+.brand-text h1{
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:-0.03em;
+}
+
+.brand-text p{
+  margin-top:3px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.lang-switch{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.lang-btn{
+  border:none;
+  cursor:pointer;
+
+  padding:10px 14px;
+
+  border-radius:12px;
+
+  background:rgba(255,255,255,0.04);
+
+  color:var(--muted);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  transition:0.2s ease;
+}
+
+.lang-btn:hover{
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+}
+
+.lang-btn.active{
+  background:rgba(225,29,72,0.12);
+  border-color:rgba(225,29,72,0.30);
+  color:#fff;
+}
+
+.hero{
+  display:flex;
+  align-items:center;
+  gap:18px;
+
+  margin-bottom:30px;
+}
+
+.icon-wrap{
+  flex-shrink:0;
+
+  width:82px;
+  height:82px;
+
+  border-radius:22px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:var(--danger-soft);
+
+  border:1px solid rgba(225,29,72,0.25);
+}
+
+.icon-wrap i{
+  width:36px;
+  height:36px;
+  color:#fb7185;
+}
+
+.hero h2{
+  font-size:34px;
+  line-height:1.1;
+  font-weight:800;
+  letter-spacing:-0.04em;
+}
+
+.hero p{
+  margin-top:10px;
+  color:var(--muted);
+  line-height:1.7;
+  font-size:15px;
+}
+
+.notice{
+  display:flex;
+  gap:14px;
+
+  padding:18px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  margin-bottom:22px;
+}
+
+.notice i{
+  width:22px;
+  height:22px;
+  flex-shrink:0;
+  color:#fb7185;
+}
+
+.notice strong{
+  display:block;
+  margin-bottom:6px;
+  font-size:15px;
+}
+
+.notice p{
+  color:var(--muted);
+  line-height:1.7;
+  font-size:14px;
+}
+
+.section{
+  margin-top:26px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  margin-bottom:16px;
+}
+
+.section-title i{
+  width:18px;
+  height:18px;
+  color:#fb7185;
+}
+
+.section-title h3{
+  font-size:16px;
+  font-weight:700;
+}
+
+.reason-box{
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.03),
+      rgba(255,255,255,0.01)
+    );
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  border-left:4px solid var(--danger);
+
+  border-radius:18px;
+
+  padding:22px;
+}
+
+body.ar .reason-box{
+  border-left:none;
+  border-right:4px solid var(--danger);
+}
+
+.reason{
+  font-size:15px;
+  line-height:1.9;
+  color:rgba(255,255,255,0.92);
+}
+
+.meta-grid{
+  margin-top:18px;
+
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+
+.meta-card{
+  padding:18px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.06);
+}
+
+.meta-card span{
+  display:block;
+
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+
+  color:rgba(255,255,255,0.45);
+
+  margin-bottom:10px;
+}
+
+.meta-card strong{
+  font-size:15px;
+  line-height:1.6;
+}
+
+.contact-grid{
+  margin-top:18px;
+
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+}
+
+.contact-btn{
+  text-decoration:none;
+  color:#fff;
+
+  display:flex;
+  align-items:center;
+  gap:14px;
+
+  padding:18px;
+
+  border-radius:18px;
+
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  transition:0.2s ease;
+}
+
+.contact-btn:hover{
+  transform:translateY(-2px);
+
+  background:rgba(255,255,255,0.05);
+
+  border-color:rgba(255,255,255,0.10);
+}
+
+.contact-btn i{
+  width:22px;
+  height:22px;
+  color:#fb7185;
+}
+
+.contact-btn span{
+  display:block;
+  font-size:13px;
+  color:var(--muted);
+  margin-top:3px;
+}
+
+.footer{
+  margin-top:28px;
+
+  padding-top:22px;
+
+  border-top:1px solid rgba(255,255,255,0.06);
+
+  color:rgba(255,255,255,0.45);
+
+  font-size:13px;
+  line-height:1.7;
+}
+
+@media (max-width: 768px){
+
+  body{
+    padding:20px 14px;
+    align-items:flex-start;
+  }
+
+  .wrapper{
+    max-width:100%;
+  }
+
+  .card{
+    padding:22px;
+    border-radius:22px;
+  }
+
+  .topbar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:18px;
+  }
+
+  .lang-switch{
+    width:100%;
+  }
+
+  .lang-btn{
+    flex:1;
+    text-align:center;
+  }
+
+  .hero{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:16px;
+  }
+
+  .hero h2{
+    font-size:28px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .icon-wrap{
+    width:72px;
+    height:72px;
+  }
+
+  .notice{
+    padding:16px;
+  }
+
+  .reason-box{
+    padding:18px;
+  }
+
+  .meta-grid{
+    grid-template-columns:1fr;
+  }
+
+  .contact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .contact-btn{
+    width:100%;
+  }
+
+  .footer{
+    font-size:12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <div class="card">
+
+    <div class="glow"></div>
+
+    <div class="topbar">
+
+      <div class="brand">
+        <div class="logo">
+          <i data-lucide="shield-alert"></i>
+        </div>
+
+        <div class="brand-text">
+          <h1>HM Bijoux</h1>
+          <p id="brandSubtitle">
+            Account Access Notice
+          </p>
+        </div>
+      </div>
+
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="ar">AR</button>
+      </div>
+
+    </div>
+
+    <div class="hero">
+
+      <div class="icon-wrap">
+        <i data-lucide="lock"></i>
+      </div>
+
+      <div>
+        <h2 id="title">
+          Account Suspended
+        </h2>
+
+        <p id="intro">
+          Your access to HM Bijoux has been temporarily restricted by an administrator after a manual review.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="notice">
+      <i data-lucide="badge-alert"></i>
+
+      <div>
+        <strong id="manualTitle">
+          Manual Administrative Action
+        </strong>
+
+        <p id="manualText">
+          This suspension was not triggered automatically by the system. It was manually applied by a member of the HM Bijoux administration team.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+
+      <div class="section-title">
+        <i data-lucide="file-warning"></i>
+        <h3 id="reasonTitle">Suspension Reason</h3>
+      </div>
+
+      <div class="reason-box">
+        <div class="reason" id="reasonText">
+          Your account was suspended due to suspicious activity detected on your profile.
+        </div>
+      </div>
+
+      <div class="meta-grid">
+
+        <div class="meta-card">
+          <span id="dateLabel">
+            Suspension Date
+          </span>
+
+          <strong id="dateValue">
+            21 May 2026 — 14:42
+          </strong>
+        </div>
+
+        <div class="meta-card">
+          <span id="statusLabel">
+            Current Status
+          </span>
+
+          <strong id="statusValue">
+            Access Temporarily Restricted
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <div class="section-title">
+        <i data-lucide="headset"></i>
+        <h3 id="supportTitle">
+          Contact Support
+        </h3>
+      </div>
+
+      <div class="notice" style="margin-bottom:18px;">
+        <i data-lucide="info"></i>
+
+        <div>
+          <strong id="supportNoticeTitle">
+            Think this was a mistake?
+          </strong>
+
+          <p id="supportNoticeText">
+            If you believe your suspension was applied incorrectly, please contact our support team with your account details for review.
+          </p>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+
+        <a
+          class="contact-btn"
+          href="mailto:nabiljouahry14@gmail.com?subject=Support%20Request%20-%20HM Bijoux"
+        >
+          <i data-lucide="mail"></i>
+
+          <div>
+            <strong>Email Support</strong>
+            <span>nabiljouahry14@gmail.com</span>
+          </div>
+        </a>
+
+        <a
+          class="contact-btn"
+          href="https://wa.me/212634630703"
+          target="_blank"
+        >
+          <i data-lucide="message-circle"></i>
+
+          <div>
+            <strong>WhatsApp Support</strong>
+            <span>+212 6 00 00 00 00</span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer" id="footerText">
+      HM Bijoux reserves the right to temporarily restrict account access in cases involving policy violations, fraudulent activity, abuse, or security concerns.
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabase = createClient(
+  "https://gickpnyixefuzunqxelt.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdpY2twbnlpeGVmdXp1bnF4ZWx0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMTMzNDUsImV4cCI6MjA5MTU4OTM0NX0.D-r3IBkFIOMeaqk5j-8mnhTHfgZM4Yp1av4E7x2t-Wo"
+);
+
+lucide.createIcons();
+
+const translations = {
+  en: {
+    title: "Account Suspended",
+    intro:
+      "Your access to HM Bijoux has been temporarily restricted by an administrator after a manual review.",
+
+    manualTitle: "Manual Administrative Action",
+
+    manualText:
+      "This suspension was not triggered automatically by the system. It was manually applied by a member of the HM Bijoux administration team.",
+
+    reasonTitle: "Suspension Reason",
+
+    dateLabel: "Suspension Date",
+
+    statusLabel: "Current Status",
+
+    statusValue: "Access Temporarily Restricted",
+
+    supportTitle: "Contact Support",
+
+    supportNoticeTitle: "Think this was a mistake?",
+
+    supportNoticeText:
+      "If you believe your suspension was applied incorrectly, please contact our support team with your account details for review.",
+
+    footerText:
+      "HM Bijoux reserves the right to temporarily restrict account access in cases involving policy violations, fraudulent activity, abuse, or security concerns.",
+
+    brandSubtitle: "Account Access Notice",
+
+    loading: "Loading suspension details...",
+    noReason: "No reason provided"
+  },
+
+  fr: {
+    title: "Compte Suspendu",
+
+    intro:
+      "Votre accès à HM Bijoux a été temporairement restreint par un administrateur après une vérification manuelle.",
+
+    manualTitle: "Action Administrative Manuelle",
+
+    manualText:
+      "Cette suspension n’a pas été déclenchée automatiquement par le système. Elle a été appliquée manuellement par un membre de l’équipe administrative de HM Bijoux.",
+
+    reasonTitle: "Raison de la Suspension",
+
+    dateLabel: "Date de Suspension",
+
+    statusLabel: "Statut Actuel",
+
+    statusValue: "Accès Temporairement Restreint",
+
+    supportTitle: "Contacter le Support",
+
+    supportNoticeTitle: "Vous pensez qu’il s’agit d’une erreur ?",
+
+    supportNoticeText:
+      "Si vous pensez que votre suspension a été appliquée par erreur, veuillez contacter notre équipe de support avec les détails de votre compte.",
+
+    footerText:
+      "HM Bijoux se réserve le droit de restreindre temporairement l’accès à un compte en cas de violation des politiques, fraude, abus ou problème de sécurité.",
+
+    brandSubtitle: "Notification d’Accès au Compte",
+
+    loading: "Chargement des informations...",
+    noReason: "Aucune raison fournie"
+  },
+
+  ar: {
+    title: "تم تعليق الحساب",
+
+    intro:
+      "تم تقييد الوصول إلى حسابك في HM Bijoux مؤقتًا بواسطة أحد المسؤولين بعد مراجعة يدوية.",
+
+    manualTitle: "إجراء إداري يدوي",
+
+    manualText:
+      "لم يتم تنفيذ هذا التعليق تلقائيًا بواسطة النظام، بل تم تطبيقه يدويًا من قبل أحد أعضاء فريق إدارة HM Bijoux.",
+
+    reasonTitle: "سبب التعليق",
+
+    dateLabel: "تاريخ التعليق",
+
+    statusLabel: "الحالة الحالية",
+
+    statusValue: "تم تقييد الوصول مؤقتًا",
+
+    supportTitle: "التواصل مع الدعم",
+
+    supportNoticeTitle: "هل تعتقد أن هذا خطأ؟",
+
+    supportNoticeText:
+      "إذا كنت تعتقد أن تعليق حسابك تم عن طريق الخطأ، يرجى التواصل مع فريق الدعم مع تفاصيل حسابك للمراجعة.",
+
+    footerText:
+      "تحتفظ HM Bijoux بالحق في تقييد الوصول إلى الحسابات مؤقتًا في حالات انتهاك السياسات أو الاحتيال أو إساءة الاستخدام أو المخاطر الأمنية.",
+
+    brandSubtitle: "إشعار الوصول إلى الحساب",
+
+    loading: "جارٍ تحميل بيانات التعليق...",
+    noReason: "لم يتم توفير سبب"
+  }
+};
+
+let suspensionData = {
+  reason: "",
+  date: ""
+};
+
+function formatDate(dateString, lang) {
+  if (!dateString) return "--";
+
+  const date = new Date(dateString);
+
+  return date.toLocaleString(
+    lang === "ar" ? "ar-MA" :
+    lang === "fr" ? "fr-FR" :
+    "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    }
+  );
+}
+
+function setLanguage(lang){
+
+  localStorage.setItem("language", lang);
+
+  document.body.classList.toggle("ar", lang === "ar");
+
+  document.documentElement.lang = lang;
+
+  document.documentElement.dir =
+    lang === "ar"
+      ? "rtl"
+      : "ltr";
+
+  document.querySelectorAll(".lang-btn").forEach(btn=>{
+    btn.classList.remove("active");
+
+    if(btn.dataset.lang === lang){
+      btn.classList.add("active");
+    }
+  });
+
+  const t = translations[lang];
+
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("intro").textContent = t.intro;
+
+  document.getElementById("manualTitle").textContent =
+    t.manualTitle;
+
+  document.getElementById("manualText").textContent =
+    t.manualText;
+
+  document.getElementById("reasonTitle").textContent =
+    t.reasonTitle;
+
+  document.getElementById("dateLabel").textContent =
+    t.dateLabel;
+
+  document.getElementById("statusLabel").textContent =
+    t.statusLabel;
+
+  document.getElementById("statusValue").textContent =
+    t.statusValue;
+
+  document.getElementById("supportTitle").textContent =
+    t.supportTitle;
+
+  document.getElementById("supportNoticeTitle").textContent =
+    t.supportNoticeTitle;
+
+  document.getElementById("supportNoticeText").textContent =
+    t.supportNoticeText;
+
+  document.getElementById("footerText").textContent =
+    t.footerText;
+
+  document.getElementById("brandSubtitle").textContent =
+    t.brandSubtitle;
+
+  document.getElementById("reasonText").textContent =
+    suspensionData.reason || t.noReason;
+
+  document.getElementById("dateValue").textContent =
+    formatDate(suspensionData.date, lang);
+}
+
+document.querySelectorAll(".lang-btn").forEach(btn=>{
+  btn.onclick = ()=>{
+    setLanguage(btn.dataset.lang);
+  };
+});
+
+async function loadSuspensionData() {
+
+  const savedLang =
+    localStorage.getItem("language") || "ar";
+
+  document.getElementById("reasonText").textContent =
+    translations[savedLang].loading;
+
+  const stored =
+    localStorage.getItem("suspensionData");
+
+  if (stored) {
+    const parsed = JSON.parse(stored);
+
+    suspensionData.reason =
+      parsed.reason || "";
+
+    suspensionData.date =
+      parsed.date || "";
+  }
+
+  setLanguage(savedLang);
+}
+
+loadSuspensionData();
+</script>
+
+</body>
+</html>

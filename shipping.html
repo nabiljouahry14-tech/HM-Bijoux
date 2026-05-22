@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shipping Information</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #e6edf7;
+  background: radial-gradient(circle at 15% 5%, rgba(96,165,250,0.18), transparent 18%),
+              radial-gradient(circle at 85% 10%, rgba(168,85,247,0.12), transparent 18%),
+              linear-gradient(180deg, #04070f 0%, #090d17 100%);
+  background-attachment: fixed;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(18px);
+  background: rgba(7, 12, 23, 0.78);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.navbar-inner {
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.8px;
+  text-transform: uppercase;
+  color: #f8fafc;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  text-decoration: none;
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+.legal-container {
+  max-width: 940px;
+  margin: 90px auto;
+  padding: 48px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 30px;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.legal-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  line-height: 1.03;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.last-updated {
+  margin: 12px 0 0;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  position: relative;
+  padding-left: 18px;
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 6px;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #60a5fa, #818cf8);
+}
+
+p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.8;
+  font-size: 0.96rem;
+}
+
+.section {
+  margin-top: 24px;
+  padding: 26px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 22px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.section:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+.lang-switch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 38px;
+}
+
+.lang-btn {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn.active {
+  background: linear-gradient(135deg, #60a5fa, #818cf8);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 12px 30px rgba(96, 165, 250, 0.18);
+}
+
+.lang {
+  display: none;
+}
+
+.lang.active {
+  display: block;
+  animation: fadeIn 0.35s ease;
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.rtl .section {
+  text-align: right;
+}
+
+.footer-note {
+  margin-top: 42px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.94rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .legal-container {
+    margin: 70px 18px;
+    padding: 32px;
+  }
+}
+
+@media (max-width: 520px) {
+  .legal-container {
+    margin: 50px 12px;
+    padding: 22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="logo">HM Bijoux</div>
+    <a href="./index.html" class="back-btn">← Back To Shop</a>
+  </div>
+</div>
+
+<div class="legal-container">
+
+<div class="lang-switch">
+<button class="lang-btn active" data-lang="en">EN</button>
+<button class="lang-btn" data-lang="fr">FR</button>
+<button class="lang-btn" data-lang="ar">AR</button>
+</div>
+
+<!-- ENGLISH -->
+<div class="lang active" id="en">
+
+<h1>Shipping Information</h1>
+<p class="last-updated">Last updated: May 2026</p>
+
+<div class="section">
+<h2>Order Processing</h2>
+<p>All orders are processed within 1-3 business days after confirmation.</p>
+</div>
+
+<div class="section">
+<h2>Delivery Time</h2>
+<p>Estimated delivery time is usually between 2-7 business days depending on your location and our delivery agent availability.</p>
+</div>
+
+<div class="section">
+<h2>Shipping Fees</h2>
+<p>Shipping costs are automatically calculated and are added to the product price during checkout.</p>
+</div>
+
+<div class="section">
+<h2>Tracking Orders</h2>
+<p>Once your order has been shipped, tracking details will be provided so you can monitor your delivery status either throught your e-mail or through the <a href="./orders.html" style="color: #60a5fa;">orders</a> section in your account settings.</p>
+</div>
+
+<div class="section">
+<h2>Important Notice</h2>
+<p>Please make sure your shipping address and contact information are accurate to avoid delays or failed deliveries we are not responsible for any wrong information provided.</p>
+</div>
+
+</div>
+
+<!-- FRENCH -->
+<div class="lang" id="fr">
+
+<h1>Informations de Livraison</h1>
+<p class="last-updated">Dernière mise à jour : Mai 2026</p>
+
+<div class="section">
+<h2>Traitement des Commandes</h2>
+<p>Toutes les commandes sont traitées sous 1 à 3 jours ouvrables après confirmation.</p>
+</div>
+
+<div class="section">
+<h2>Délai de Livraison</h2>
+<p>La livraison prend généralement entre 2 et 7 jours ouvrables selon votre localisation et la disponibilité de notre agent de livraison.</p>
+</div>
+
+<div class="section">
+<h2>Frais de Livraison</h2>
+<p>Les frais de livraison sont calculés automatiquement et sont ajoutés au prix du produit lors du paiement.</p>
+</div>
+
+<div class="section">
+<h2>Suivi des Commandes</h2>
+<p>Les informations de suivi seront envoyées après l’expédition de votre commande est tu peux les consulter dans votre adresse email ou dans la section <a href="./orders.html" style="color: #60a5fa;">ordres</a> de ton compte.</p>
+</div>
+
+<div class="section">
+<h2>Information Importante</h2>
+<p>Veuillez vérifier vos informations de livraison afin d’éviter tout retard ou problème de livraison. Nous ne sommes pas responsables des informations incorrectes fournies.</p>
+</div>
+
+</div>
+
+<!-- ARABIC -->
+<div class="lang rtl" id="ar">
+
+<h1>معلومات الشحن</h1>
+<p class="last-updated">آخر تحديث: ماي 2026</p>
+
+<div class="section">
+<h2>معالجة الطلبات</h2>
+<p>تتم معالجة جميع الطلبات في غضون يوم إلى ثلاثة أيام عمل بعد التأكيد.</p>
+</div>
+
+<div class="section">
+<h2>مدة التوصيل</h2>
+<p>يتراوح وقت التسليم المتوقع عادةً بين 2-7 أيام عمل حسب موقعك ومدى توافر مندوب التوصيل لدينا.</p>
+</div>
+
+<div class="section">
+<h2>رسوم الشحن</h2>
+<p>يتم احتساب رسوم الشحن تلقائياً ويتم إضافتها إلى سعر المنتج أثناء إتمام عملية الدفع.</p>
+</div>
+
+<div class="section">
+<h2>تتبع الطلبات</h2>
+<p>عندما يتم شحن الطلب الخاص بك، سيتم إرسال معلومات التتبع إلى بريدك الإلكتروني أو في قسم <a href="./orders.html" style="color: #60a5fa;">الطلبات</a> في إعدادات حسابك.</p>
+</div>
+
+<div class="section">
+<h2>ملاحظة مهمة</h2>
+<p>يرجى التأكد من صحة معلومات الشحن لتجنب أي تأخير أو فشل في التوصيل نحن لسنا مسؤولين عن أي معلومات غير صحيحة تم تقديمها.</p>
+</div>
+
+</div>
+
+<h3 class="footer-note">© 2026 HM Bijoux. All rights reserved.</h3>
+
+</div>
+
+<script>
+const buttons = document.querySelectorAll(".lang-btn");
+const sections = document.querySelectorAll(".lang");
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    buttons.forEach(b => b.classList.remove("active"));
+    sections.forEach(s => s.classList.remove("active"));
+
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.lang).classList.add("active");
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund Policy</title>
+
+  <style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #e6edf7;
+  background: radial-gradient(circle at 15% 5%, rgba(96,165,250,0.18), transparent 18%),
+              radial-gradient(circle at 85% 10%, rgba(168,85,247,0.12), transparent 18%),
+              linear-gradient(180deg, #04070f 0%, #090d17 100%);
+  background-attachment: fixed;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(18px);
+  background: rgba(7, 12, 23, 0.78);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.navbar-inner {
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.8px;
+  text-transform: uppercase;
+  color: #f8fafc;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  text-decoration: none;
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(148, 163, 184, 0.22);
+}
+
+.legal-container {
+  max-width: 940px;
+  margin: 90px auto;
+  padding: 48px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 30px;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.legal-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  line-height: 1.03;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.last-updated {
+  margin: 12px 0 0;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  position: relative;
+  padding-left: 18px;
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 6px;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #60a5fa, #818cf8);
+}
+
+p,
+li {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.8;
+  font-size: 0.96rem;
+}
+
+.section {
+  margin-top: 24px;
+  padding: 26px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 22px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.section:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+ul {
+  margin: 0;
+  padding-left: 22px;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.lang-switch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 38px;
+}
+
+.lang-btn {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn.active {
+  background: linear-gradient(135deg, #60a5fa, #818cf8);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 12px 30px rgba(96, 165, 250, 0.18);
+}
+
+.lang.active {
+  display: block;
+  animation: fadeIn 0.35s ease;
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.rtl .section {
+  text-align: right;
+}
+
+.rtl ul {
+  padding-left: 0;
+  padding-right: 22px;
+}
+
+.footer-note {
+  margin-top: 42px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.94rem;
+}
+
+.footer-note a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.footer-note a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-inner {
+    padding: 14px 18px;
+  }
+
+  .legal-container {
+    margin: 70px 18px;
+    padding: 32px;
+    border-radius: 26px;
+  }
+
+  h1 {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .last-updated {
+    font-size: 0.92rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+  .lang-btn {
+    padding: 9px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .navbar-inner {
+    padding: 12px 16px;
+  }
+
+  .legal-container {
+    margin: 50px 12px;
+    padding: 22px;
+  }
+
+  .back-btn {
+    padding: 8px 12px;
+    font-size: 0.87rem;
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 9vw, 2.4rem);
+  }
+
+  .section {
+    padding: 16px;
+  }
+
+  .lang-switch {
+    gap: 8px;
+  }
+}
+
+.lang {
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+  overflow: hidden;
+}
+
+.lang.active {
+  opacity: 1;
+  pointer-events: auto;
+  height: auto;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="logo">HM Bijoux</div>
+    <a href="./index.html" class="back-btn">← Back To Shop</a>
+  </div>
+</div>
+
+<div class="legal-container">
+
+  <div class="lang-switch">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+  </div>
+
+  <!-- EN -->
+  <div class="lang active" id="en">
+    <h1>Refund Policy</h1>
+    <p class="last-updated">Last updated: April 2026</p>
+
+    <div class="section">
+      <h2>Eligibility</h2>
+      <p>You can request a refund within 7 days of receiving your order.</p>
+    </div>
+
+    <div class="section">
+      <h2>Conditions</h2>
+      <ul>
+        <li>Items must be unused</li>
+        <li>Items must be in original condition</li>
+        <li>Original packaging is required</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Non-refundable Costs</h2>
+      <p>Shipping costs are non-refundable.</p>
+    </div>
+
+    <div class="section">
+      <h2>Contact</h2>
+      <p>Please contact us to request a refund.</p>
+    </div>
+  </div>
+
+  <!-- FR -->
+  <div class="lang" id="fr">
+    <h1>Politique de Remboursement</h1>
+    <p class="last-updated">Dernière mise à jour : Avril 2026</p>
+
+    <div class="section">
+      <h2>Éligibilité</h2>
+      <p>Vous pouvez demander un remboursement dans les 7 jours suivant la réception.</p>
+    </div>
+
+    <div class="section">
+      <h2>Conditions</h2>
+      <ul>
+        <li>Les articles doivent être non utilisés</li>
+        <li>En état d'origine</li>
+        <li>Avec emballage d'origine</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Frais non remboursables</h2>
+      <p>Les frais de livraison ne sont pas remboursables.</p>
+    </div>
+
+    <div class="section">
+      <h2>Contact</h2>
+      <p>Contactez-nous pour toute demande de remboursement.</p>
+    </div>
+  </div>
+
+  <!-- AR -->
+  <div class="lang" id="ar">
+    <h1>سياسة الاسترجاع</h1>
+    <p class="last-updated">آخر تحديث: أبريل 2026</p>
+
+    <div class="section">
+      <h2>الأهلية</h2>
+      <p>يمكنك طلب استرجاع خلال 7 أيام من استلام الطلب.</p>
+    </div>
+
+    <div class="section">
+      <h2>الشروط</h2>
+      <ul>
+        <li>يجب أن يكون المنتج غير مستخدم</li>
+        <li>في حالته الأصلية</li>
+        <li>مع التغليف الأصلي</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>التكاليف غير القابلة للاسترجاع</h2>
+      <p>رسوم الشحن غير قابلة للاسترجاع.</p>
+    </div>
+
+    <div class="section">
+      <h2>التواصل</h2>
+      <p>يرجى التواصل معنا لطلب الاسترجاع.</p>
+    </div>
+  </div>
+  <h3 style="text-align:center; margin-top:40px; color:#555;">© 2026 HM Bijoux. All rights reserved.</h3>
+</div>
+
+<script>
+const buttons = document.querySelectorAll(".lang-btn");
+const sections = document.querySelectorAll(".lang");
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const lang = btn.dataset.lang;
+
+    // avoid redundant re-render
+    if (document.getElementById(lang).classList.contains("active")) return;
+
+    buttons.forEach(b => b.classList.remove("active"));
+    sections.forEach(s => s.classList.remove("active"));
+
+    btn.classList.add("active");
+    document.getElementById(lang).classList.add("active");
+
+    // direction control (important fix)
+    document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
+
+    // language attribute (SEO + accessibility)
+    document.documentElement.lang = lang;
+  });
+});
+</script>
+
+</body>
+</html>

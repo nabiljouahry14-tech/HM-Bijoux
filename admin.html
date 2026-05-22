@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — HM Bijoux</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="main.css">
+
+<!-- ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg:#0b0f19;
+  --card:#111827;
+  --card-soft:#0f172a;
+  --border:#1f2937;
+  --text:#e5e7eb;
+  --muted:#6b7280;
+
+  --primary:#3b82f6;
+  --primary-glow: rgba(59,130,246,0.25);
+
+  --success:#22c55e;
+  --danger:#ef4444;
+}
+
+body{
+  background: radial-gradient(
+    circle at top left,
+    #0f172a 0%,
+    #020617 60%
+  );
+}
+
+/* LAYOUT */
+.admin-wrapper{
+  display:grid;
+  grid-template-columns:260px 1fr;
+  min-height:100vh;
+}
+
+/* SIDEBAR */
+.sidebar{
+  background: linear-gradient(
+    180deg,
+    #0f172a,
+    #020617
+  );
+  border-right: 1px solid rgba(255,255,255,0.05);
+  gap:8px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+
+}
+
+button{
+  position: relative;
+  overflow: hidden;
+}
+
+button::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.2),
+    transparent
+  );
+  opacity:0;
+  transition:.3s;
+}
+
+select {
+  background: var(--card);
+  color: var(--text);
+}
+
+select option {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+button:hover::after{
+  opacity:1;
+}
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#1f2937;
+  border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:#374151;
+}
+
+.brand{
+  font-size:18px;
+  font-weight:800;
+  color:var(--text);
+  padding-bottom:15px;
+  margin-bottom:15px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  letter-spacing:0.5px;
+}
+
+.brand i{
+  color: var(--primary);
+  margin-right:6px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:10px;
+  cursor:pointer;
+  color:var(--muted);
+  transition:.2s;
+}
+
+.nav-item:hover{
+  background:rgba(255,255,255,0.05);
+  color:white;
+}
+
+.logout{
+  margin-top:auto;
+  margin-top:20px; /* separation from nav */
+  padding:12px;
+  font-weight:600;
+  border:1px solid var(--danger);
+  color:var(--danger);
+  background:rgba(239,68,68,0.08);
+  border-radius:12px;
+  transition:.2s;
+}
+
+.logout:hover{
+  background: var(--danger);
+  color:white;
+}
+
+/* MAIN */
+.main{
+  display:flex;
+  flex-direction:column;
+}
+
+.header{
+  background:var(--card);
+  padding:20px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header h1{font-size:22px}
+
+/* ADD BUTTON */
+.add-btn{
+  background:var(--primary);
+  border:none;
+  padding:10px 16px;
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+  transition:.3s;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.add-btn:hover{
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 10px 25px rgba(11,95,255,0.3);
+}
+
+/* CONTENT */
+.content{
+  padding:20px;
+}
+
+/* KPI */
+.kpi{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:15px;
+  margin-bottom:20px;
+}
+
+@media (max-width: 900px){
+  .admin-wrapper{
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar{
+    display:none;
+  }
+
+  .content{
+    padding:15px;
+  }
+
+  #adminList,
+  #reviewsList{
+    grid-template-columns:1fr;
+  }
+}
+
+
+
+.kpi-card{
+  background:var(--card);
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.product,
+.kpi-card{
+  background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.01)
+  );
+  border: 1px solid var(--border);
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.kpi-title{
+  font-size:11px;
+  color:var(--muted);
+}
+
+.kpi-value{
+  font-size:20px;
+  font-weight:700;
+  margin-top:5px;
+}
+
+/* CONTROLS */
+.controls{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+
+input,select{
+  background:var(--card);
+  border:1px solid var(--border);
+  color:white;
+  padding:10px;
+  border-radius:10px;
+}
+
+/* PRODUCTS */
+#adminList{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:15px;
+}
+
+.product{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  transition:.2s;
+  position : relative;
+}
+
+.product:hover{
+  transform: translateY(-4px) scale(1.01);
+  border-color: var(--primary);
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.6),
+    0 0 0 1px var(--primary-glow);
+}
+
+input, select, textarea{
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: 0.2s;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+
+/* IMAGE FIX */
+.product img{
+  width:100%;
+  height:180px;
+  object-fit:contain;
+  background:#0b1220;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* INPUT LABEL WRAPPER */
+.field{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:8px;
+  font-size:12px;
+  color:var(--muted);
+}
+
+.field input, .field select{
+  width: 100%;
+}
+
+.field input,
+.field select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #333;
+  background: #0f0f0f;
+  color: white;
+  font-size: 13px;
+}
+
+.field input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+
+/* FILE UPLOAD */
+.file-label{
+  display:flex;
+  justify-content:center;
+  padding:8px;
+  background:#0b1220;
+  border:1px dashed var(--border);
+  border-radius:10px;
+  cursor:pointer;
+  margin-bottom:8px;
+  transition:.2s;
+}
+
+.file-label:hover{
+  border-color:var(--primary);
+  color:var(--primary);
+}
+
+/* NUMBER INPUT (clean stepper) */
+input[type=number]{
+  appearance:textfield;
+}
+
+/* ACTIONS */
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+}
+
+.save{
+  flex:1;
+  background:var(--success);
+  border:none;
+  padding:10px;
+  border-radius:10px;
+  color:white;
+}
+
+.delete{
+  flex:1;
+  border:1px solid var(--danger);
+  color:var(--danger);
+  background:transparent;
+  border-radius:10px;
+}
+
+/* TOAST */
+.toast{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:var(--card);
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  opacity:0;
+  transform:translateY(10px);
+  transition:.3s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+.field {
+  display: flex;
+  grid-template-columns: 18px 70px 1fr;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+  flex-direction: column;
+}
+
+.field i {
+  color: var(--primary);
+  font-size: 14px;
+}
+
+.field span {
+  font-size: 12px;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.imgWrap {
+  position: relative;
+}
+
+.imgWrap img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #000;
+}
+
+.imgWrap .badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.restock {
+  flex: 1;
+  background: rgba(11, 95, 255, 0.1);
+  border: 1px solid rgba(11, 95, 255, 0.4);
+  color: #0b5fff;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.restock:hover {
+  background: #0b5fff;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(11, 95, 255, 0.25);
+}
+.status {
+  background: var(--card);
+  color: white;
+  border: 1px solid var(--border);
+  padding: 6px;
+  border-radius: 8px;
+}
+.section {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  width: 100%;
+}
+.section h4 {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  color: #aaa;
+  letter-spacing: 0.5px;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+/* row item */
+.row {
+  display: grid;
+  grid-template-columns: 70px 1.4fr 1.5fr 1.1fr 50px;
+  gap: 8px;
+  align-items: center;
+}
+
+.variantList .row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.variant-top {
+  width: 100%;
+}
+
+.variant-top input {
+  width: 100%;
+  font-size: 14px;
+  padding: 10px 12px;
+}
+
+.variant-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 40px;
+  gap: 6px;
+}
+
+.variant-bottom button {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.variantList input {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  display: none;
+}
+
+.variantList .row:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary-glow);
+}
+
+.badge.new {
+  background: #f59e0b;
+  color: black;
+}
+
+.badge.sale {
+  background: #22c55e;
+  color: white;
+}
+
+.row input {
+  width: 100%;
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 13px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.row img {
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.row button {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: .2s;
+  padding: 6px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 80%;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.row button:hover {
+  background: rgba(11, 95, 255, 0.1);
+  border-color: var(--primary);
+}
+
+.product {
+  background: #111;
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  transition: transform 0.15s ease;
+  position: relative;
+  overflow: hidden;
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #000;
+}
+
+.product:hover {
+  transform: translateY(-2px);
+}
+
+.product.new {
+  border: 2px dashed #3b82f6;
+  animation: fadeIn 0.2s ease;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.actions button {
+  flex: 1;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.badge i {
+  font-size: 10px;
+}
+
+.product.new {
+  border: 2px dashed #3b82f6;
+  background: rgba(59,130,246,0.05);
+}
+
+.badge.out { background: #991b1b; color: white; }
+.badge.low { background: #ef4444; color: white; }
+.badge.mid { background: #f59e0b; color: black; }
+
+@keyframes fadeIn {
+  from { transform: scale(0.97); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+/* Primary (Save / Create) */
+button.save,
+button.saveNew {
+  background: #22c55e;
+  color: white;
+}
+
+button.save:hover,
+button.saveNew:hover {
+  background: #16a34a;
+}
+
+/* Danger (Delete) */
+button.delete,
+button.deleteOrder {
+  background: #ef4444;
+  color: white;
+}
+
+button.delete:hover,
+button.deleteOrder:hover {
+  background: #dc2626;
+}
+
+/* Secondary (Stock / Actions) */
+button.restock {
+  background: #3b82f6;
+  color: white;
+}
+
+button.restock:hover {
+  background: #2563eb;
+}
+
+/* Neutral (Cancel / small buttons) */
+button.cancelNew,
+button.deleteImg,
+button.deleteVariant {
+  background: #1f2937;
+  color: #ccc;
+}
+
+button.cancelNew:hover,
+button.deleteImg:hover,
+button.deleteVariant:hover {
+  background: #374151;
+}
+
+/* Add buttons (+ image / + variant) */
+button.addImage,
+button.addVariant {
+  background: transparent;
+  border: 1px dashed #444;
+  color: #aaa;
+}
+
+button.addImage:hover,
+button.addVariant:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modalContent {
+  background: #111;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+#closeModal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.orderItem {
+  display: flex;
+  gap: 10px;
+  border-bottom: 1px solid #333;
+  padding: 10px 0;
+}
+
+.orderItemImg {
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.orderItemCard {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.orderItemTop {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.orderItemMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.orderItemOptions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 4px 8px;
+  font-size: 11px;
+  border-radius: 999px;
+  background: rgba(59,130,246,0.15);
+  color: #3b82f6;
+  border: 1px solid rgba(59,130,246,0.3);
+}
+
+.search-wrap {
+  position: relative;
+}
+
+.search-wrap input {
+  padding-right: 32px; /* space for X */
+}
+
+.search-clear {
+  all: unset;
+  display: none;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 26px;
+  height: 26px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  border: 1px solid var(--border);
+
+  background: rgba(255,255,255,0.05);
+  color: #aaa;
+
+  font-size: 14px;
+  line-height: 1;
+  overflow: hidden;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-clear i {
+  pointer-events: none;
+}
+
+.search-clear:hover {
+  background: var(--danger);
+  color: white;
+  border-color: var(--danger);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* 🔥 SHOW WHEN ACTIVE */
+.search-wrap.active .search-clear {
+  display: grid;
+}
+
+.confirm-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.confirm-box {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 14px;
+  width: 300px;
+  text-align: center;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+/* REVIEWS PANEL */
+#reviewsList{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(420px,1fr));
+  gap:15px;
+}
+
+.review-group{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.review-group h3{
+  margin:0;
+  font-size:18px;
+  font-weight:700;
+}
+
+.review-meta{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.review-item{
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.review-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.review-user{
+  font-weight:600;
+  color:var(--text);
+}
+
+.review-rating{
+  color:#f59e0b;
+  font-weight:700;
+}
+
+.review-comment{
+  line-height:1.5;
+  color:var(--text);
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+
+.review-date{
+  font-size:12px;
+  color:var(--muted);
+}
+
+.review-delete{
+  background:#ef4444;
+  color:white;
+  border:none;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.review-delete:hover{
+  background:#dc2626;
+}
+
+/* USERS PANEL */
+#usersList{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:15px;
+}
+
+.user-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.user-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.user-email{
+  font-weight:700;
+  color:var(--text);
+  word-break:break-word;
+}
+
+.user-role{
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:999px;
+  font-weight:700;
+}
+
+.user-role.admin{
+  background:rgba(59,130,246,0.15);
+  color:#3b82f6;
+  border:1px solid rgba(59,130,246,0.35);
+}
+
+.user-role.user{
+  background:rgba(255,255,255,0.06);
+  color:#ccc;
+  border:1px solid rgba(255,255,255,0.08);
+}
+
+.user-meta{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.user-actions{
+  display:flex;
+  gap:8px;
+  margin-top:6px;
+}
+
+.user-actions button{
+  flex:1;
+}
+
+</style>
+</head>
+
+<body>
+<div id="loadingScreen">
+  <div class="loader"></div>
+  <p>Loading admin panel...</p>
+</div>  
+
+<div class="admin-wrapper">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="brand"><i class="fa fa-gem"></i> HM Bijoux</div>
+
+  <div class="nav-item" id="navProducts">
+    <i class="fa fa-box"></i> Products
+  </div>
+  <div class="nav-item" id="navOrders">
+    <i class="fa fa-receipt"></i> Orders
+  </div>
+  <div class="nav-item" id="navReviews">
+    <i class="fa fa-star"></i> Reviews
+  </div>
+  <div class="nav-item" id="navUsers">
+    <i class="fa fa-users"></i> Users
+  </div>
+
+  <button class="logout" id="logoutBtn">Logout</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<div class="header">
+  <h1>Product Manager</h1>
+
+  <button class="add-btn" id="addProduct">
+    <i class="fa fa-plus"></i> Add Product
+  </button>
+</div>
+
+<div class="content">
+
+<!-- PRODUCTS VIEW -->
+<div id="productsPanel">
+
+  <!-- KPI (PRODUCTS) -->
+  <div class="kpi">
+    <div class="kpi-card">
+      <div class="kpi-title">Products</div>
+      <div class="kpi-value" id="kpiProducts">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Total Stock</div>
+      <div class="kpi-value" id="kpiStock">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Low Stock</div>
+      <div class="kpi-value" id="kpiLowStock">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Categories</div>
+      <div class="kpi-value">3</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Status</div>
+      <div class="kpi-value" style="color:#10b981">Online</div>
+    </div>
+  </div>
+
+  <!-- PRODUCT CONTROLS -->
+  <div class="controls">
+    <div class="search-wrap">
+      <input id="searchInput" placeholder="Search products...">
+      <button id="clearSearch" class="search-clear" type="button"><i class="fa fa-xmark"></i></button>
+    </div>
+
+    <select id="filterCategory">
+      <option value="all">All</option>
+      <option value="accessories">Fancy Bracelets & Watches</option>
+      <option value="fragrances">Fancy Rings</option>
+      <option value="urban">Fancy Chaines</option>
+    </select>
+  </div>
+
+  <!-- PRODUCT GRID -->
+  <div id="adminList"></div>
+
+</div>
+
+
+<!-- ORDERS VIEW (HIDDEN BY DEFAULT) -->
+<div id="ordersPanel" style="display:none;">
+
+  <!-- KPI (ORDERS) -->
+  <div class="kpi">
+    <div class="kpi-card">
+      <div class="kpi-title">Orders</div>
+      <div class="kpi-value" id="kpiOrders">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Revenue</div>
+      <div class="kpi-value" id="kpiRevenue">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Pending</div>
+      <div class="kpi-value" id="kpiPending">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Status</div>
+      <div class="kpi-value" style="color:#10b981">Online</div>
+    </div>
+  </div>
+
+  <!-- ORDERS LIST -->
+  <div id="ordersList"></div>
+
+</div>
+
+<div id="reviewsPanel" style="display:none;">
+
+  <div class="kpi">
+    <div class="kpi-card">
+      <div class="kpi-title">Products With Reviews</div>
+      <div class="kpi-value" id="kpiReviewProducts">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Total Reviews</div>
+      <div class="kpi-value" id="kpiReviews">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Average Rating</div>
+      <div class="kpi-value" id="kpiReviewAverage">0.0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Status</div>
+      <div class="kpi-value" style="color:#10b981">Online</div>
+    </div>
+  </div>
+
+
+  <div id="reviewsList"></div>
+
+</div>
+<!-- USERS PANEL -->
+<div id="usersPanel" style="display:none;">
+
+  <div class="kpi">
+    <div class="kpi-card">
+      <div class="kpi-title">Total Users</div>
+      <div class="kpi-value" id="kpiUsers">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Admins</div>
+      <div class="kpi-value" id="kpiAdmins">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Verified Emails</div>
+      <div class="kpi-value" id="kpiVerified">0</div>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-title">Status</div>
+      <div class="kpi-value" style="color:#10b981">Online</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <input id="userSearchInput" placeholder="Search users by email or name...">
+    </div>
+  </div>
+
+  <div id="usersList"></div>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<div id="orderModal" class="modal hidden">
+  <div class="modalContent">
+    <button id="closeModal">x</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<div id="confirmModal" class="confirm-modal hidden">
+  <div class="confirm-box">
+    <p id="confirmText">Are you sure?</p>
+
+    <div class="confirm-actions">
+      <button id="confirmYes" class="btn-danger">Delete</button>
+      <button id="confirmNo">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="suspendModal" class="modal hidden">
+  <div class="modalContent">
+    <h3>Suspend User</h3>
+    <p id="suspendUserInfo" style="opacity:0.7"></p>
+
+    <textarea
+      id="suspendReasonInput"
+      placeholder="Enter suspension reason..."
+      style="width:100%; min-height:100px; margin-top:10px;"
+    ></textarea>
+
+    <div style="display:flex; gap:10px; margin-top:15px;">
+      <button id="suspendConfirm">Suspend</button>
+      <button id="suspendCancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="translations.js"></script>
+<script type="module" src="admin.js"></script>
+</body>
+</html>

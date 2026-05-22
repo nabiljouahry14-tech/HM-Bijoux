@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - HM Bijoux</title>
+
+<link rel="stylesheet" href="main.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #e6edf7;
+  background:
+    radial-gradient(circle at 15% 5%, rgba(96,165,250,0.18), transparent 18%),
+    radial-gradient(circle at 85% 10%, rgba(168,85,247,0.12), transparent 18%),
+    linear-gradient(180deg, #04070f 0%, #090d17 100%);
+  background-attachment: fixed;
+}
+
+/* NAVBAR */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(18px);
+  background: rgba(7, 12, 23, 0.78);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.navbar-inner {
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.8px;
+  text-transform: uppercase;
+  color: #f8fafc;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  text-decoration: none;
+  color: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+/* MAIN CONTAINER */
+.about-container {
+  max-width: 980px;
+  margin: 90px auto;
+  padding: 48px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 30px;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.32);
+  backdrop-filter: blur(20px);
+}
+
+/* LANGUAGE SWITCHER */
+.lang-switch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 2; /* keep language buttons above decorative elements */
+}
+
+.lang-btn {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: 0.2s ease;
+}
+
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.lang-btn.active {
+  background: linear-gradient(135deg, #60a5fa, #818cf8);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 12px 30px rgba(96, 165, 250, 0.18);
+}
+
+/* LANGUAGE CONTENT */
+.lang {
+  display: none;
+}
+
+.lang.active {
+  display: block;
+  animation: fadeIn 0.35s ease;
+}
+
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(96, 165, 250, 0.10);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  line-height: 1.5;
+  max-width: 100%;
+  white-space: normal;
+  word-break: break-word;
+  position: relative;
+  z-index: 1;
+  clear: both;
+
+  /* IMPORTANT: push the badge well below the language buttons */
+  margin: 24px 0 28px 0;
+}
+
+@media (max-width: 520px) {
+  .badge {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 14px;
+    font-size: 11px;
+    line-height: 1.6;
+    border-radius: 18px;
+
+    /* MORE SPACE so it no longer overlaps EN / FR / AR buttons */
+    margin: 28px 0 32px 0;
+  }
+
+  .badge svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+}
+
+/* FORCE LUCIDE ICON COLORS */
+.badge svg,
+.icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: #60a5fa !important;
+  color: #60a5fa !important;
+  fill: none !important;
+  stroke-width: 2;
+}
+
+.icon {
+  margin-bottom: 8px;
+}
+
+/* TYPOGRAPHY */
+h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  line-height: 1.05;
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+h2 {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f8fafc;
+  position: relative;
+  padding-left: 18px;
+}
+
+h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 6px;
+  height: 22px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #60a5fa, #818cf8);
+}
+
+.rtl h2 {
+  padding-left: 0;
+  padding-right: 18px;
+}
+
+.rtl h2::before {
+  left: auto;
+  right: 0;
+}
+
+.subtitle,
+p {
+  color: #cbd5e1;
+  line-height: 1.8;
+  font-size: 0.96rem;
+}
+
+.subtitle {
+  margin: 0 0 34px;
+}
+
+/* CONTENT SECTIONS */
+.section {
+  margin-top: 24px;
+  padding: 26px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  border-radius: 22px;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.section:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+/* FEATURE GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.card {
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(148, 163, 184, 0.08);
+  transition: transform 0.25s ease, background 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.card h3 {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #f8fafc;
+}
+
+.card p {
+  margin: 0;
+}
+
+.footer-note {
+  margin-top: 42px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.94rem;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* TABLET */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-container {
+    margin: 60px 18px;
+    padding: 32px;
+    border-radius: 26px;
+  }
+
+  .navbar-inner {
+    padding: 14px 18px;
+  }
+
+  .badge {
+    margin-bottom: 24px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 520px) {
+  .navbar-inner {
+    padding: 12px 16px;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 17px;
+  }
+
+  .back-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .about-container {
+    margin: 50px 12px;
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .badge {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    margin-bottom: 26px;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 9vw, 2.5rem);
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    margin-bottom: 28px;
+  }
+
+  .section {
+    padding: 18px;
+  }
+
+  .card {
+    padding: 18px;
+  }
+
+  .lang-btn {
+    padding: 9px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+[data-lucide],
+[data-lucide] svg,
+.icon,
+.icon svg,
+.badge svg,
+.card svg {
+  color: #60a5fa !important;
+  stroke: #60a5fa !important;
+  fill: none !important;
+}
+
+/* Size for feature card icons */
+.icon,
+.icon svg,
+.card svg {
+  width: 22px !important;
+  height: 22px !important;
+  stroke-width: 2 !important;
+  display: inline-block;
+}
+
+/* Badge icon (map pin) */
+.badge svg {
+  width: 16px !important;
+  height: 16px !important;
+  stroke-width: 2 !important;
+  flex-shrink: 0;
+}
+
+/* Optional: make sure Lucide doesn't inherit black from main.css */
+svg.lucide {
+  color: #60a5fa !important;
+  stroke: #60a5fa !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="logo">HM Bijoux</div>
+    <a href="index.html" class="back-btn">← Back To Shop</a>
+  </div>
+</div>
+
+<div class="about-container">
+
+  <div class="lang-switch">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="ar">AR</button>
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="lang active" id="en">
+    <span class="badge">
+      <i data-lucide="map-pin"></i>
+      Casablanca Based • Fashion Jewelry Store
+    </span>
+
+    <h1>About HM Bijoux</h1>
+
+    <p class="subtitle">
+      HM Bijoux is a Casablanca-based fashion jewelry brand focused on modern, elegant designs.
+      We do not sell real gold or silver — our pieces are crafted from premium fashion materials
+      that offer a luxurious look at accessible prices.
+    </p>
+
+    <div class="section">
+      <h2>Our Story</h2>
+      <p>
+        HM Bijoux was created with one vision: to make stylish jewelry accessible to everyone.
+        Every collection is selected to reflect current trends while remaining timeless enough
+        to wear every day.
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon"><i data-lucide="truck"></i></div>
+        <h3>Fast Shipping</h3>
+        <p>Orders are delivered within 7 business days across Casablanca with reliable tracking.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon"><i data-lucide="gem"></i></div>
+        <h3>Premium Look</h3>
+        <p>Elegant fashion jewelry designed to replicate luxury aesthetics without precious metals.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon"><i data-lucide="shield-check"></i></div>
+        <h3>Quality Control</h3>
+        <p>Every item is inspected before shipping to ensure excellent finish and quality.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Why Choose Us</h2>
+      <p>
+        We focus on clean design, customer satisfaction, and reliable service.
+        HM Bijoux offers stylish jewelry with simple ordering and dependable delivery.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Shipping Policy</h2>
+      <p>
+        All orders are processed and shipped within 7 business days.
+        Delivery times may vary slightly depending on your location.
+      </p>
+    </div>
+  </div>
+
+  <!-- FRENCH -->
+  <div class="lang" id="fr">
+    <span class="badge">
+      <i data-lucide="map-pin"></i>
+      Basé à Casablanca • Bijoux Fantaisie
+    </span>
+
+    <h1>À Propos de HM Bijoux</h1>
+
+    <p class="subtitle">
+      HM Bijoux est une marque de bijoux fantaisie basée à Casablanca, spécialisée dans des
+      créations modernes et élégantes. Nos bijoux offrent une apparence luxueuse à des prix accessibles.
+    </p>
+
+    <div class="section">
+      <h2>Notre Histoire</h2>
+      <p>
+        HM Bijoux a été créé pour rendre les bijoux tendance accessibles à tous.
+        Chaque collection est sélectionnée pour refléter les dernières tendances.
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon"><i data-lucide="truck"></i></div>
+        <h3>Livraison Rapide</h3>
+        <p>Livraison partout à Casablanca sous 7 jours ouvrables avec suivi.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon"><i data-lucide="gem"></i></div>
+        <h3>Aspect Premium</h3>
+        <p>Des bijoux élégants avec une finition luxueuse à prix abordable.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon"><i data-lucide="shield-check"></i></div>
+        <h3>Contrôle Qualité</h3>
+        <p>Chaque article est vérifié avant expédition.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Pourquoi Nous Choisir</h2>
+      <p>
+        Design moderne, service fiable et satisfaction client sont au cœur de notre marque.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Politique de Livraison</h2>
+      <p>
+        Toutes les commandes sont expédiées sous 7 jours ouvrables.
+      </p>
+    </div>
+  </div>
+
+  <!-- ARABIC -->
+  <div class="lang rtl" id="ar">
+    <span class="badge">
+      <i data-lucide="map-pin"></i>
+      متجر مجوهرات عصري • الدار البيضاء
+    </span>
+
+    <h1>من نحن</h1>
+
+    <p class="subtitle">
+      HM Bijoux علامة متخصصة في الإكسسوارات والمجوهرات العصرية بمدينة الدار البيضاء،
+      نقدم تصاميم أنيقة تمنح مظهراً فاخراً بأسعار مناسبة.
+    </p>
+
+    <div class="section">
+      <h2>قصتنا</h2>
+      <p>
+        بدأنا بهدف بسيط: تقديم مجوهرات أنيقة وعصرية بأسعار في متناول الجميع.
+      </p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="icon"><i data-lucide="truck"></i></div>
+        <h3>شحن سريع</h3>
+        <p>التوصيل خلال 7 أيام عمل إلى جميع أنحاء الدار البيضاء.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon"><i data-lucide="gem"></i></div>
+        <h3>مظهر فاخر</h3>
+        <p>تصاميم أنيقة تمنحك مظهراً راقياً بسعر مناسب.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon"><i data-lucide="shield-check"></i></div>
+        <h3>فحص الجودة</h3>
+        <p>يتم فحص كل قطعة بعناية قبل الشحن.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>لماذا تختارنا</h2>
+      <p>
+        نهتم بالجودة والتصميم العصري وخدمة العملاء الموثوقة.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>سياسة الشحن</h2>
+      <p>
+        تتم معالجة وشحن جميع الطلبات خلال 7 أيام عمل.
+      </p>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    © 2026 HM Bijoux. All rights reserved.
+  </div>
+</div>
+
+<!-- Replace your existing script at the bottom of the page with this one -->
+
+<!-- REPLACE ONLY THIS FUNCTION IN YOUR EXISTING FILE -->
+<script>
+function renderIcons() {
+  // Remove previously generated SVGs so Lucide can rebuild them cleanly
+  document.querySelectorAll("svg.lucide").forEach(svg => svg.remove());
+
+  // Recreate icons from all <i data-lucide="..."> placeholders
+  lucide.createIcons();
+
+  // Force icon styling directly on generated SVGs
+  document.querySelectorAll("svg.lucide").forEach(svg => {
+    const isBadge = svg.closest(".badge");
+
+    // Set presentation attributes directly on the SVG
+    svg.setAttribute("stroke", "#60a5fa");
+    svg.setAttribute("fill", "none");
+    svg.setAttribute("stroke-width", "2");
+    svg.setAttribute("stroke-linecap", "round");
+    svg.setAttribute("stroke-linejoin", "round");
+
+    // Force styles (overrides anything coming from main.css)
+    svg.style.stroke = "#60a5fa";
+    svg.style.color = "#60a5fa";
+    svg.style.fill = "none";
+    svg.style.display = "inline-block";
+    svg.style.verticalAlign = "middle";
+    svg.style.flexShrink = "0";
+
+    // Size
+    if (isBadge) {
+      svg.style.width = "16px";
+      svg.style.height = "16px";
+    } else {
+      svg.style.width = "22px";
+      svg.style.height = "22px";
+    }
+
+    // Apply stroke color to all child elements as well
+    svg.querySelectorAll("*").forEach(el => {
+      el.setAttribute("stroke", "#60a5fa");
+      el.setAttribute("fill", "none");
+      el.style.stroke = "#60a5fa";
+      el.style.fill = "none";
+    });
+  });
+}
+
+// Language switching
+const buttons = document.querySelectorAll(".lang-btn");
+const sections = document.querySelectorAll(".lang");
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    // Switch active button
+    buttons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // Switch active language section
+    sections.forEach(section => section.classList.remove("active"));
+    document.getElementById(btn.dataset.lang).classList.add("active");
+
+    // Re-render icons because hidden sections may contain untouched placeholders
+    renderIcons();
+  });
+});
+
+// Initial render after DOM is fully loaded
+document.addEventListener("DOMContentLoaded", () => {
+  renderIcons();
+});
+</script>
+
+</body>
+</html>

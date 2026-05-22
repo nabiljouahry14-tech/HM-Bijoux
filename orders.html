@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <script>
+    const savedTheme = localStorage.getItem("theme") || "light";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="orders.pageTitle">My Orders • HM Bijoux</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <script src="translations.js"></script>
+  <script src="utils.js"></script>
+
+  <style>
+    .orders-page { padding: 50px 0 80px; min-height: 100vh; }
+    .orders-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 34px; flex-wrap: wrap; }
+    .orders-title-wrap h1 { margin: 0; font-size: 42px; font-weight: 800; letter-spacing: -0.03em; }
+    .orders-sub { margin-top: 8px; color: var(--muted); font-size: 15px; }
+    .back-store-btn { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-radius: 18px; text-decoration: none; background: var(--card); border: 1px solid var(--border); color: var(--text); font-weight: 600; transition: .25s ease; box-shadow: 0 10px 30px rgba(0,0,0,.08); }
+    .back-store-btn:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); }
+    .orders-empty { background: var(--card); border: 1px solid var(--border); border-radius: 28px; padding: 60px 24px; text-align: center; }
+    .orders-empty h3 { margin: 18px 0 10px; font-size: 24px; }
+    .orders-empty p { color: var(--muted); margin-bottom: 24px; }
+    .order { background: var(--card); border: 1px solid var(--border); border-radius: 30px; padding: 26px; margin-bottom: 24px; box-shadow: 0 20px 50px rgba(0,0,0,.08); transition: .25s ease; }
+    .order:hover { transform: translateY(-3px); }
+    .order-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 24px; flex-wrap: wrap; }
+    .order-id { font-size: 20px; font-weight: 700; }
+    .order-date { margin-top: 6px; color: var(--muted); font-size: 14px; }
+    .status { padding: 10px 16px; border-radius: 999px; font-size: 13px; font-weight: 700; text-transform: capitalize; border: 1px solid transparent; }
+    .status.pending { background: rgba(245,158,11,.12); color: #f59e0b; border-color: rgba(245,158,11,.18); }
+    .status.processing { background: rgba(59,130,246,.12); color: #3b82f6; border-color: rgba(59,130,246,.18); }
+    .status.shipped { background: rgba(168,85,247,.12); color: #a855f7; border-color: rgba(168,85,247,.18); }
+    .status.delivered { background: rgba(34,197,94,.12); color: #22c55e; border-color: rgba(34,197,94,.18); }
+    .timeline { position: relative; display: flex; justify-content: space-between; margin: 30px 0; }
+    .timeline::before { content: ""; position: absolute; top: 16px; left: 20px; right: 20px; height: 3px; background: rgba(255,255,255,.06); border-radius: 999px; }
+    .timeline-progress { position: absolute; top: 16px; left: 20px; right: 20px; height: 3px; background: linear-gradient(90deg,var(--primary),#22c55e); border-radius: 999px; transform-origin: left center; transform: scaleX(0); transition: .3s ease; }
+    .step { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; flex: 1; gap: 10px; }
+    .dot { width: 34px; height: 34px; border-radius: 50%; background: var(--card); border: 2px solid rgba(255,255,255,.08); display: flex; align-items: center; justify-content: center; transition: .25s ease; }
+    .step.active .dot { background: #22c55e; border-color: #22c55e; box-shadow: 0 0 0 6px rgba(34,197,94,.12); }
+    .dot::after { content: "✓"; font-size: 14px; font-weight: 900; color: #0f0f0f; opacity: 0; }
+    .step.active .dot::after { opacity: 1; }
+    .step span { font-size: 12px; color: var(--muted); text-transform: capitalize; }
+    .step.active span { color: var(--text); font-weight: 600; }
+    .items { display: grid; gap: 14px; }
+    .item { display: flex; align-items: center; gap: 16px; padding: 14px; border-radius: 20px; background: var(--card); border: 1px solid var(--border); }
+    .item img { width: 74px; height: 74px; object-fit: cover; border-radius: 16px; }
+    .item-info { flex: 1; }
+    .item-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .item-small { font-size: 13px; color: var(--muted); }
+    .item-price { font-size: 16px; font-weight: 700; }
+    .order-footer { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .total-label { color: var(--muted); }
+    .total { font-size: 24px; font-weight: 800; }
+    @media(max-width:768px) { .orders-page { padding-top: 30px; } .orders-title-wrap h1 { font-size: 32px; } .order { padding: 18px; border-radius: 24px; } .timeline { overflow-x: auto; gap: 16px; padding-bottom: 10px; } .timeline::before, .timeline-progress { left: 30px; right: 30px; } .item { align-items: flex-start; } .item img { width: 64px; height: 64px; } .order-footer { flex-direction: column; align-items: flex-start; } .back-store-btn { width: 100%; justify-content: center; } }
+    
+  </style>
+</head>
+
+<body>
+
+<section class="orders-page">
+  <div class="container">
+
+    <div class="orders-top">
+
+      <div class="orders-title-wrap">
+        <h1 data-i18n="orders.title">My Orders</h1>
+        <div class="orders-sub" data-i18n="orders.subtitle">
+          Track your HM Bijoux orders and delivery progress.
+        </div>
+      </div>
+
+      <a href="#" class="back-store-btn" onclick="goToHome()" data-i18n="orders.back">
+        ← Back to Store
+      </a>
+
+    </div>
+
+    <div id="orders"></div>
+
+  </div>
+</section>
+
+<script>
+function goToHome() {
+  if (window.location.pathname.includes("/collections/")) {
+    window.location.href = "../index.html";
+  } else {
+    window.location.href = "index.html";
+  }
+}
+</script>
+
+<script type="module">
+import { supabase } from "./supabase.js";
+
+const ordersContainer = document.getElementById("orders");
+let isLoadingOrders = false;
+
+function getTimeline(status, lang = window.currentLanguage){
+
+  const steps = ["pending","processing","shipped","delivered"];
+  const currentStepIndex = Math.max(0, steps.indexOf((status || "pending").toLowerCase()));
+  const progressScale = (currentStepIndex + 1) / steps.length;
+  const origin = lang === 'ar' ? 'right center' : 'left center';
+  const rtlStyle = lang === 'ar' ? 'direction: rtl;' : '';
+
+  return `
+    <div class="timeline" style="${rtlStyle}">
+
+      <div 
+        class="timeline-progress"
+        style="transform-origin: ${origin}; transform: scaleX(${progressScale});">
+      </div>
+
+      ${steps.map((step, i) => `
+        <div class="step ${i <= currentStepIndex ? "active" : ""}">
+          <div class="dot"></div>
+          <span>${t(`orders.status.${step}`, lang)}</span>
+        </div>
+      `).join("")}
+
+    </div>
+  `;
+}
+
+async function loadOrders(){
+  if(isLoadingOrders) return;
+  isLoadingOrders = true;
+
+  const {
+    data:{ user }
+  } = await supabase.auth.getUser();
+
+  if(!user){
+
+    ordersContainer.innerHTML = `
+      <div class="orders-empty">
+
+        <svg width="58" height="58" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M6 6h15l-1.5 9h-12z"/>
+          <circle cx="9" cy="20" r="1.5"/>
+          <circle cx="18" cy="20" r="1.5"/>
+        </svg>
+
+        <h3>Please login first</h3>
+
+        <p>
+          You need to login to view your orders.
+        </p>
+
+        <a href="index.html" class="btn btn-primary">
+          Go to Store
+        </a>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  const { data: orders } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending:false });
+
+  const uniqueOrders = orders
+    ? Array.from(new Map(orders.map(order => [order.id, order])).values())
+    : [];
+
+  if(!uniqueOrders || uniqueOrders.length === 0){
+
+    ordersContainer.innerHTML = `
+      <div class="orders-empty">
+
+        <svg width="58" height="58" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M6 6h15l-1.5 9h-12z"/>
+          <circle cx="9" cy="20" r="1.5"/>
+          <circle cx="18" cy="20" r="1.5"/>
+        </svg>
+
+        <h3 data-i18n="orders.noOrdersTitle">No orders yet</h3>
+
+        <p data-i18n="orders.noOrdersBody">
+          Looks like you haven't purchased anything yet.
+        </p>
+
+        <a href="index.html#products" class="btn btn-primary" data-i18n="orders.startShopping">
+          Start Shopping
+        </a>
+
+      </div>
+    `;
+
+    return;
+  }
+
+  ordersContainer.innerHTML = '';
+
+  for (const order of uniqueOrders) {
+    const { data: items } = await supabase
+      .from("order_items")
+      .select("*")
+      .eq("order_id", order.id);
+
+    const div = document.createElement("div");
+    div.className = "order";
+
+    const statusClass = order.status || "pending";
+
+    div.innerHTML = `
+      <div class="order-header">
+        <div>
+          <div class="order-id">
+            Order #${order.id.slice(0,8)}
+          </div>
+          <div class="order-date">
+            ${new Date(order.created_at).toLocaleString()}
+          </div>
+        </div>
+
+        <div class="status ${statusClass}">
+          ${t(`orders.status.${statusClass}`, window.currentLanguage)}
+        </div>
+      </div>
+
+      ${getTimeline(statusClass, window.currentLanguage)}
+
+      <div class="items">
+        ${(items || []).map(item => `
+          <div class="item">
+            <img src="${item.image_url || ""}" alt="${item.name}">
+            <div class="item-info">
+              <div class="item-name">
+                ${item.name}
+              </div>
+              <div class="item-small">
+                ${item.color || "Default"}
+                ${item.size ? "• " + item.size : ""}
+                • Qty ${item.quantity}
+              </div>
+            </div>
+            <div class="item-price">
+              ${formatCurrency(item.price)}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+
+      <div class="order-footer">
+        <div class="total-label">
+          ${t('orders.orderTotal', window.currentLanguage)}
+        </div>
+        <div class="total">
+          ${formatCurrency(order.total)}
+        </div>
+      </div>
+    `;
+
+    ordersContainer.appendChild(div);
+  }
+
+  isLoadingOrders = false;
+}
+
+loadOrders();
+
+// Attach language listener only once
+if (!window.ordersPageInitialized) {
+  window.ordersPageInitialized = true;
+  window.addEventListener('languageChanged', () => {
+    loadOrders();
+  });
+}
+
+</script>
+
+</body>
+</html>

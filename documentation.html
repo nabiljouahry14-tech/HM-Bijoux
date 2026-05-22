@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Help Center</title>
+
+<style>
+/* USE SAME CSS FROM api.html */
+body{
+margin:0;
+min-height:100vh;
+font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;
+color:#e6edf7;
+background:
+radial-gradient(circle at 15% 5%, rgba(96,165,250,0.18), transparent 18%),
+radial-gradient(circle at 85% 10%, rgba(168,85,247,0.12), transparent 18%),
+linear-gradient(180deg,#04070f 0%,#090d17 100%);
+background-attachment:fixed;
+}
+
+.navbar{
+position:sticky;
+top:0;
+background:rgba(7,12,23,0.78);
+padding:16px 22px;
+}
+
+.logo{
+font-size:20px;
+font-weight:800;
+color:#fff;
+}
+
+.legal-container{
+max-width:940px;
+margin:90px auto;
+padding:48px;
+background:rgba(15,23,42,0.95);
+border-radius:30px;
+}
+
+.lang-switch{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-bottom:38px;
+}
+
+.lang-btn{
+padding:10px 18px;
+border-radius:999px;
+cursor:pointer;
+background:rgba(255,255,255,0.05);
+border:none;
+color:white;
+}
+
+.lang-btn.active{
+background:linear-gradient(135deg,#60a5fa,#818cf8);
+}
+
+.lang{display:none;}
+.lang.active{display:block;}
+
+.section{
+margin-top:24px;
+padding:26px;
+background:rgba(255,255,255,0.04);
+border-radius:22px;
+}
+
+h1{
+font-size:3rem;
+margin:0;
+}
+
+h2{
+color:#fff;
+}
+
+p{
+color:#cbd5e1;
+line-height:1.8;
+}
+
+.rtl{
+direction:rtl;
+text-align:right;
+}
+
+.navbar-inner{
+max-width:1100px;
+margin:auto;
+padding:16px 22px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-weight:800;
+font-size:20px;
+color:#f8fafc;
+}
+
+.back-btn{
+padding:10px 16px;
+border-radius:999px;
+text-decoration:none;
+color:#fff;
+border:1px solid rgba(148,163,184,0.14);
+background:rgba(255,255,255,0.05);
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+<div class="navbar-inner">
+<div class="logo">HM Bijoux</div>
+<a href="./index.html" class="back-btn">← Back To Shop</a>
+</div>
+</div>
+
+<div class="legal-container">
+
+<div class="lang-switch">
+<button class="lang-btn active" data-lang="en">EN</button>
+<button class="lang-btn" data-lang="fr">FR</button>
+<button class="lang-btn" data-lang="ar">AR</button>
+</div>
+
+<div class="lang active" id="en">
+<h1>Help Center</h1>
+
+<div class="section">
+<h2>Ordering</h2>
+<p>Browse products, add items to cart, and complete checkout securely.</p>
+</div>
+
+<div class="section">
+<h2>Shipping</h2>
+<p>Orders are processed quickly and shipped depending on your location.</p>
+</div>
+
+<div class="section">
+<h2>Returns</h2>
+<p>Eligible products may be returned within the approved return period.</p>
+</div>
+
+<div class="section">
+<h2>Support</h2>
+<p>Contact our support team for questions regarding orders or products.</p>
+</div>
+</div>
+
+<div class="lang" id="fr">
+<h1>Centre d’Aide</h1>
+
+<div class="section">
+<h2>Commandes</h2>
+<p>Ajoutez vos produits au panier et finalisez votre achat en sécurité.</p>
+</div>
+
+<div class="section">
+<h2>Livraison</h2>
+<p>Les commandes sont expédiées rapidement selon votre région.</p>
+</div>
+
+<div class="section">
+<h2>Retours</h2>
+<p>Les produits éligibles peuvent être retournés durant la période autorisée.</p>
+</div>
+
+<div class="section">
+<h2>Support</h2>
+<p>Contactez notre équipe pour toute question.</p>
+</div>
+</div>
+
+<div class="lang rtl" id="ar">
+<h1>مركز المساعدة</h1>
+
+<div class="section">
+<h2>الطلبات</h2>
+<p>يمكنك إضافة المنتجات إلى السلة وإتمام عملية الشراء بأمان.</p>
+</div>
+
+<div class="section">
+<h2>الشحن</h2>
+<p>يتم شحن الطلبات بسرعة حسب المنطقة.</p>
+</div>
+
+<div class="section">
+<h2>الإرجاع</h2>
+<p>يمكن إرجاع المنتجات المؤهلة خلال الفترة المحددة.</p>
+</div>
+
+<div class="section">
+<h2>الدعم</h2>
+<p>تواصل مع فريق الدعم لأي استفسار.</p>
+</div>
+</div>
+
+</div>
+
+<script>
+const buttons=document.querySelectorAll(".lang-btn");
+const sections=document.querySelectorAll(".lang");
+
+buttons.forEach(btn=>{
+btn.addEventListener("click",()=>{
+buttons.forEach(b=>b.classList.remove("active"));
+sections.forEach(s=>s.classList.remove("active"));
+btn.classList.add("active");
+document.getElementById(btn.dataset.lang).classList.add("active");
+});
+});
+</script>
+
+</body>
+</html>
