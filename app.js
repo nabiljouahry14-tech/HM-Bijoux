@@ -1,6 +1,6 @@
   import { supabase } from "./supabase.js";
   import { checkUserSuspension } from "./auth-guard.js";
-const BASE = document.querySelector('base')?.getAttribute('href') || "";
+const BASE = "/HM-Bijoux";
 
   async function bootstrap() {
     const suspension = await checkUserSuspension();
