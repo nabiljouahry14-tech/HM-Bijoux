@@ -404,7 +404,7 @@ const BASE = document.querySelector('base')?.getAttribute('href') || "";
         await supabase.auth.signInWithOAuth({
           provider: "google",
           options: {
-            redirectTo: `${BASE}/index.html`,
+            redirectTo: window.location.origin + "/index.html",
             flowType: "pkce",
             queryParams: {
               access_type: "offline",
