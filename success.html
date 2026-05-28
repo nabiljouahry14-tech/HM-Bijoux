@@ -6,135 +6,325 @@
   <title data-i18n="success.pageTitle">Order Success</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-    }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
 
-    body {
-      background: #0f0f0f;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-    }
+  body {
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top left, rgba(34,197,94,0.12), transparent 30%),
+      radial-gradient(circle at bottom right, rgba(34,197,94,0.08), transparent 30%),
+      #0b0b0b;
 
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+  }
+
+  /* FLOATING GLOW ORBS */
+  .bg-orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(90px);
+    opacity: 0.22;
+    animation: floatOrb 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .orb1 {
+    width: 260px;
+    height: 260px;
+    background: #22c55e;
+    top: -100px;
+    left: -60px;
+  }
+
+  .orb2 {
+    width: 220px;
+    height: 220px;
+    background: #16a34a;
+    bottom: -80px;
+    right: -60px;
+    animation-delay: 2s;
+  }
+
+  @keyframes floatOrb {
+    0%,100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .container {
+    width: 100%;
+    max-width: 540px;
+    position: relative;
+    z-index: 2;
+
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(20px);
+
+    border-radius: 28px;
+
+    padding: 42px 32px;
+
+    box-shadow:
+      0 20px 80px rgba(0,0,0,0.6),
+      inset 0 1px 0 rgba(255,255,255,0.05);
+
+    text-align: center;
+
+    animation: cardEnter 0.7s ease;
+  }
+
+  @keyframes cardEnter {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* SUCCESS ICON */
+  .check-wrapper {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 28px;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .success-glow {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: rgba(34,197,94,0.18);
+    filter: blur(25px);
+    animation: pulseGlow 2.5s infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%,100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.12);
+      opacity: 0.9;
+    }
+  }
+
+  .circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #22c55e;
+    position: absolute;
+    transform: scale(0);
+    animation: pop 0.45s ease forwards;
+
+    background: rgba(34,197,94,0.05);
+    box-shadow:
+      0 0 30px rgba(34,197,94,0.2),
+      inset 0 0 25px rgba(34,197,94,0.08);
+  }
+
+  @keyframes pop {
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .check {
+    position: absolute;
+    width: 58px;
+    height: 30px;
+
+    border-left: 4px solid #22c55e;
+    border-bottom: 4px solid #22c55e;
+
+    transform: rotate(-45deg) scale(0);
+
+    top: 46px;
+    left: 37px;
+
+    animation: draw 0.45s ease forwards;
+    animation-delay: 0.45s;
+  }
+
+  @keyframes draw {
+    to {
+      transform: rotate(-45deg) scale(1);
+    }
+  }
+
+  h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    letter-spacing: -0.03em;
+
+    animation: fadeUp 0.6s ease forwards;
+    animation-delay: 0.15s;
+    opacity: 0;
+  }
+
+  p {
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    font-size: 15px;
+    margin-bottom: 30px;
+
+    animation: fadeUp 0.6s ease forwards;
+    animation-delay: 0.3s;
+    opacity: 0;
+  }
+
+  p a {
+    color: #22c55e;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  p a:hover {
+    text-decoration: underline;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    animation: fadeUp 0.6s ease forwards;
+    animation-delay: 0.45s;
+    opacity: 0;
+  }
+
+  .btn {
+    border: none;
+    cursor: pointer;
+
+    padding: 14px 22px;
+
+    border-radius: 14px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+      transform 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+
+    min-width: 180px;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+
+    box-shadow:
+      0 10px 25px rgba(34,197,94,0.25);
+  }
+
+  .btn-primary:hover {
+    box-shadow:
+      0 14px 35px rgba(34,197,94,0.35);
+  }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.04);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.07);
+  }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
     .container {
-      max-width: 500px;
-      padding: 20px;
-    }
-
-    /* CHECK CIRCLE */
-    .check-wrapper {
-      width: 120px;
-      height: 120px;
-      margin: 0 auto 30px;
-      position: relative;
-    }
-
-    .circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid #22c55e;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform: scale(0);
-      animation: pop 0.4s ease forwards;
-    }
-
-    @keyframes pop {
-      to {
-        transform: scale(1);
-      }
-    }
-
-    /* CHECK MARK */
-    .check {
-      position: absolute;
-      width: 60px;
-      height: 30px;
-      border-left: 4px solid #22c55e;
-      border-bottom: 4px solid #22c55e;
-      transform: translate(-50%, -50%) rotate(-45deg) scale(0);
-      top: 35px;
-      left: 30px;
-      animation: draw 0.5s ease forwards;
-      animation-delay: 0.4s;
-    }
-
-    @keyframes draw {
-      to {
-        transform: rotate(-45deg) scale(1);
-      }
+      padding: 34px 22px;
+      border-radius: 24px;
     }
 
     h1 {
       font-size: 28px;
-      margin-bottom: 15px;
-      font-weight: 600;
     }
 
     p {
-      color: #aaa;
-      line-height: 1.6;
-      margin-bottom: 25px;
+      font-size: 14px;
     }
 
     .buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
+      flex-direction: column;
     }
 
     .btn {
-      padding: 12px 20px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      transition: 0.2s;
+      width: 100%;
+      min-width: unset;
     }
 
-    .btn-primary {
-      background: #22c55e;
-      color: #000;
+    .check-wrapper {
+      transform: scale(0.92);
+      margin-bottom: 18px;
     }
-
-    .btn-primary:hover {
-      background: #16a34a;
-    }
-
-    .btn-secondary {
-      background: #1f1f1f;
-      color: #fff;
-      border: 1px solid #333;
-    }
-
-    .btn-secondary:hover {
-      background: #2a2a2a;
-    }
-  </style>
+  }
+</style>
   <script src="translations.js"></script>
 </head>
 
 <body>
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
   <div class="container">
 
     <div class="check-wrapper">
+      <div class="success-glow"></div>
       <div class="circle"></div>
       <div class="check"></div>
     </div>
 
     <h1 data-i18n="success.title">Order Confirmed</h1>
 
-    <p>
+    <p data-i18n-html="success.message">
       Thank you for shopping from HM Bijoux. A confirmation has been sent to your email with full order details. You can also track your order anytime from your <a href="orders.html" style="color: #22c55e;">profile</a>.</p>
 
     <div class="buttons">
